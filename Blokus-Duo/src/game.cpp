@@ -978,7 +978,7 @@ GameResult play_game(Board board, Player p1, Player p2, Color start_turn,
                << move.block_id << " at (" << move.x << "," << move.y
                << ") with rotation " << move.rotation << "\n";
         }
-        // board.print_status(turn);
+        board.print_status(turn);
       }
     }
 

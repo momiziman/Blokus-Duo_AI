@@ -346,6 +346,8 @@ Block::Block(const BlockData &data) {
     for (int i = 0; i < 7; ++i)
       for (int j = 0; j < 7; ++j)
         influence[i][j] = data.influence[i][j];
+
+    rebuild_occupied_offsets();
   }
 
 vector<vector<int>> Block::transpose(const vector<vector<int>> &mat) {
@@ -373,16 +375,19 @@ vector<vector<int>> Block::rot90(const vector<vector<int>> &mat, int k) {
     return res;
   }
 
-vector<Position> Block::occupied_offsets() const {
-  vector<Position> offsets;
+void Block::rebuild_occupied_offsets() {
+  cells.clear();
   for (int r = 0; r < (int)shape.size(); ++r) {
     for (int c = 0; c < (int)shape[r].size(); ++c) {
       if (shape[r][c] == CANTSET) {
-        offsets.push_back({c - 2, r - 2});
+        cells.push_back({c - 2, r - 2});
       }
     }
   }
-  return offsets;
+}
+
+const vector<Position> &Block::occupied_offsets() const {
+  return cells;
 }
 
 void Block::rotate_block(int dir) {
@@ -425,6 +430,7 @@ void Block::rotate_block(int dir) {
       influence = rot90(transpose(influence), 2);
       break;
     }
+    rebuild_occupied_offsets();
   }
 
 BlockData getBlock(const std::string &id) {

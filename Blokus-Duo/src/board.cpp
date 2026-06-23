@@ -1,7 +1,43 @@
 #include "../include/board.hpp"
 
 Board::Board(int tile_number, const vector<vector<vector<int>>> &input_board)
-    : TILE_NUMBER(tile_number), status(input_board) {}
+    : TILE_NUMBER(tile_number), status(input_board),
+      bit_status(tile_number + 2, vector<uint8_t>(tile_number + 2, 0)) {
+    rebuild_bit_status();
+  }
+
+void Board::rebuild_bit_status() {
+    bit_status.assign(TILE_NUMBER + 2, vector<uint8_t>(TILE_NUMBER + 2, 0));
+
+    for (int col = 0; col < COLOR_NUM; ++col) {
+      uint8_t block_bit = (col == 0) ? P1_BLOCK_BIT : P2_BLOCK_BIT;
+      uint8_t opp_block_bit = (col == 0) ? P2_BLOCK_BIT : P1_BLOCK_BIT;
+      uint8_t cant_bit = (col == 0) ? P1_CANT_BIT : P2_CANT_BIT;
+      uint8_t able_bit = (col == 0) ? P1_ABLE_BIT : P2_ABLE_BIT;
+
+      for (int y = 0; y < TILE_NUMBER + 2; ++y) {
+        for (int x = 0; x < TILE_NUMBER + 2; ++x) {
+          int cell = status[col][y][x];
+          if (cell == MYBLOCK)
+            bit_status[y][x] |= block_bit;
+          else if (cell == OPBLOCK)
+            bit_status[y][x] |= opp_block_bit;
+          else if (cell == CANTSET)
+            bit_status[y][x] |= cant_bit;
+          else if (cell == ABLESET)
+            bit_status[y][x] |= able_bit;
+        }
+      }
+    }
+  }
+
+uint8_t Board::cell_bits(int x, int y) const {
+    if (y < 0 || y >= (int)bit_status.size())
+      return 0;
+    if (x < 0 || x >= (int)bit_status[y].size())
+      return 0;
+    return bit_status[y][x];
+  }
 
 bool Board::settable_check(Color color, const vector<vector<int>> &block_shape,
                       int x, int y) {
@@ -223,6 +259,8 @@ void Board::change_status(Color color, Block &block, const std::string &block_id
     auto it = block_table.find(block_id);
     if (it != block_table.end())
       player.score += it->second.score;
+
+    rebuild_bit_status();
   }
 
 void Board::print_status(Color color) {

@@ -41,6 +41,9 @@ struct Position {
 };
 
 struct Move {
+  static constexpr std::uint16_t PASS_CODE = 0xffff;
+  static constexpr std::uint16_t INVALID_CODE = 0xfffe;
+
   std::string block_id;
   int x = -1;
   int y = -1;
@@ -52,5 +55,45 @@ struct Move {
 
   bool is_pass() const {
     return block_id.empty();
+  }
+
+  bool is_valid() const {
+    if (is_pass())
+      return true;
+    if (block_id.size() != 1)
+      return false;
+    int block_index = block_id[0] - 'a';
+    return 0 <= block_index && block_index < 21 && 0 <= x && x < 16 &&
+           0 <= y && y < 16 && 0 <= rotation && rotation < 8;
+  }
+
+  std::uint16_t packed() const {
+    if (is_pass())
+      return PASS_CODE;
+    if (!is_valid())
+      return INVALID_CODE;
+
+    std::uint16_t block_index =
+        static_cast<std::uint16_t>(block_id[0] - 'a');
+    return static_cast<std::uint16_t>((block_index << 11) |
+                                      ((rotation & 0x7) << 8) |
+                                      ((x & 0xf) << 4) | (y & 0xf));
+  }
+
+  static Move from_packed(std::uint16_t code) {
+    if (code == PASS_CODE)
+      return Move();
+    if (code == INVALID_CODE)
+      return Move("?", -1, -1, 0);
+
+    int y = code & 0xf;
+    int x = (code >> 4) & 0xf;
+    int rotation = (code >> 8) & 0x7;
+    int block_index = (code >> 11) & 0x1f;
+    if (block_index < 0 || block_index >= 21)
+      return Move("?", -1, -1, 0);
+
+    return Move(std::string(1, static_cast<char>('a' + block_index)), x, y,
+                rotation);
   }
 };

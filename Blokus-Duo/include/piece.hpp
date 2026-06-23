@@ -14,12 +14,14 @@ extern std::vector<std::string> BLOCK_IDS_BY_SIZE;
 struct Block {
   vector<vector<int>> shape;
   vector<vector<int>> influence;
+  vector<Position> cells;
 
   Block(const BlockData &data);
 
   vector<vector<int>> transpose(const vector<vector<int>> &mat);
   vector<vector<int>> rot90(const vector<vector<int>> &mat, int k);
-  vector<Position> occupied_offsets() const;
+  void rebuild_occupied_offsets();
+  const vector<Position> &occupied_offsets() const;
   void rotate_block(int dir);
 };
 
