@@ -26,12 +26,20 @@ public:
 
   void rebuild_bit_status();
   uint8_t cell_bits(int x, int y) const;
+  void set_cell_state(int color_index, int y, int x, int state);
+  bool settable_check(Color color, const Block &block, int x, int y);
   bool settable_check(Color color, const vector<vector<int>> &block_shape,
                       int x, int y);
+  vector<pair<int, int>> search_settable_position(Color color,
+                                                  const Block &block);
   vector<pair<int, int>> search_settable_position(
       Color color, const vector<vector<int>> &block_shape);
   vector<pair<int, int>> search_settable_position_near_ableset(
+      Color color, const Block &block);
+  vector<pair<int, int>> search_settable_position_near_ableset(
       Color color, const vector<vector<int>> &block_shape);
+  vector<pair<int, int>> search_settable_position_one_ableset(
+      Color color, const Block &block, int ax, int ay);
   vector<pair<int, int>> search_settable_position_one_ableset(
       Color color, const vector<vector<int>> &block_shape, int ax, int ay);
   std::optional<std::pair<int, int>> select_random_settable_position(

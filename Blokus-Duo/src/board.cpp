@@ -3,309 +3,337 @@
 Board::Board(int tile_number, const vector<vector<vector<int>>> &input_board)
     : TILE_NUMBER(tile_number), status(input_board),
       bit_status(tile_number + 2, vector<uint8_t>(tile_number + 2, 0)) {
-    rebuild_bit_status();
-  }
+  rebuild_bit_status();
+}
 
 void Board::rebuild_bit_status() {
-    bit_status.assign(TILE_NUMBER + 2, vector<uint8_t>(TILE_NUMBER + 2, 0));
+  bit_status.assign(TILE_NUMBER + 2, vector<uint8_t>(TILE_NUMBER + 2, 0));
 
-    for (int col = 0; col < COLOR_NUM; ++col) {
-      uint8_t block_bit = (col == 0) ? P1_BLOCK_BIT : P2_BLOCK_BIT;
-      uint8_t opp_block_bit = (col == 0) ? P2_BLOCK_BIT : P1_BLOCK_BIT;
-      uint8_t cant_bit = (col == 0) ? P1_CANT_BIT : P2_CANT_BIT;
-      uint8_t able_bit = (col == 0) ? P1_ABLE_BIT : P2_ABLE_BIT;
+  for (int col = 0; col < COLOR_NUM; ++col) {
+    uint8_t block_bit = (col == 0) ? P1_BLOCK_BIT : P2_BLOCK_BIT;
+    uint8_t opp_block_bit = (col == 0) ? P2_BLOCK_BIT : P1_BLOCK_BIT;
+    uint8_t cant_bit = (col == 0) ? P1_CANT_BIT : P2_CANT_BIT;
+    uint8_t able_bit = (col == 0) ? P1_ABLE_BIT : P2_ABLE_BIT;
 
-      for (int y = 0; y < TILE_NUMBER + 2; ++y) {
-        for (int x = 0; x < TILE_NUMBER + 2; ++x) {
-          int cell = status[col][y][x];
-          if (cell == MYBLOCK)
-            bit_status[y][x] |= block_bit;
-          else if (cell == OPBLOCK)
-            bit_status[y][x] |= opp_block_bit;
-          else if (cell == CANTSET)
-            bit_status[y][x] |= cant_bit;
-          else if (cell == ABLESET)
-            bit_status[y][x] |= able_bit;
-        }
+    for (int y = 0; y < TILE_NUMBER + 2; ++y) {
+      for (int x = 0; x < TILE_NUMBER + 2; ++x) {
+        int cell = status[col][y][x];
+        if (cell == MYBLOCK)
+          bit_status[y][x] |= block_bit;
+        else if (cell == OPBLOCK)
+          bit_status[y][x] |= opp_block_bit;
+        else if (cell == CANTSET)
+          bit_status[y][x] |= cant_bit;
+        else if (cell == ABLESET)
+          bit_status[y][x] |= able_bit;
       }
     }
   }
+}
 
 uint8_t Board::cell_bits(int x, int y) const {
-    if (y < 0 || y >= (int)bit_status.size())
-      return 0;
-    if (x < 0 || x >= (int)bit_status[y].size())
-      return 0;
-    return bit_status[y][x];
+  if (y < 0 || y >= (int)bit_status.size())
+    return 0;
+  if (x < 0 || x >= (int)bit_status[y].size())
+    return 0;
+  return bit_status[y][x];
+}
+
+void Board::set_cell_state(int color_index, int y, int x, int state) {
+  status[color_index][y][x] = state;
+
+  uint8_t own_block_bit = (color_index == 0) ? P1_BLOCK_BIT : P2_BLOCK_BIT;
+  uint8_t opp_block_bit = (color_index == 0) ? P2_BLOCK_BIT : P1_BLOCK_BIT;
+  uint8_t cant_bit = (color_index == 0) ? P1_CANT_BIT : P2_CANT_BIT;
+  uint8_t able_bit = (color_index == 0) ? P1_ABLE_BIT : P2_ABLE_BIT;
+
+  bit_status[y][x] &= static_cast<uint8_t>(~(cant_bit | able_bit));
+
+  if (state == MYBLOCK)
+    bit_status[y][x] |= own_block_bit;
+  else if (state == OPBLOCK)
+    bit_status[y][x] |= opp_block_bit;
+  else if (state == CANTSET)
+    bit_status[y][x] |= cant_bit;
+  else if (state == ABLESET)
+    bit_status[y][x] |= able_bit;
+}
+
+static Block block_from_shape(const vector<vector<int>> &block_shape) {
+  BlockData data{};
+  for (int y = 0; y < (int)block_shape.size() && y < 5; ++y) {
+    for (int x = 0; x < (int)block_shape[y].size() && x < 5; ++x) {
+      data.shape[y][x] = block_shape[y][x];
+    }
   }
+  return Block(data);
+}
+
+bool Board::settable_check(Color color, const Block &block, int x, int y) {
+  int col = static_cast<int>(color);
+  bool found_corner = false;
+
+  uint8_t own_block_bit = (col == 0) ? P1_BLOCK_BIT : P2_BLOCK_BIT;
+  uint8_t opp_block_bit = (col == 0) ? P2_BLOCK_BIT : P1_BLOCK_BIT;
+  uint8_t cant_bit = (col == 0) ? P1_CANT_BIT : P2_CANT_BIT;
+  uint8_t able_bit = (col == 0) ? P1_ABLE_BIT : P2_ABLE_BIT;
+
+  for (const auto &offset : block.occupied_offsets()) {
+    int access_y = y + offset.y;
+    int access_x = x + offset.x;
+
+    if (access_y < 0 || access_y >= TILE_NUMBER + 2 || access_x < 0 ||
+        access_x >= TILE_NUMBER + 2)
+      continue;
+
+    uint8_t bits = bit_status[access_y][access_x];
+    if (bits & (own_block_bit | opp_block_bit | cant_bit))
+      return false;
+    if (bits & able_bit)
+      found_corner = true;
+  }
+
+  return found_corner;
+}
 
 bool Board::settable_check(Color color, const vector<vector<int>> &block_shape,
-                      int x, int y) {
-    int col = static_cast<int>(color);
-    bool found_corner = false;
+                           int x, int y) {
+  Block block = block_from_shape(block_shape);
+  return settable_check(color, block, x, y);
+}
 
-    int H = block_shape.size();
-    int W = block_shape[0].size();
+vector<pair<int, int>> Board::search_settable_position(Color color,
+                                                       const Block &block) {
+  vector<pair<int, int>> res;
+  int col = static_cast<int>(color);
+  uint8_t cant_bit = (col == 0) ? P1_CANT_BIT : P2_CANT_BIT;
 
-    for (int i = 0; i < H; ++i) {
-      for (int j = 0; j < W; ++j) {
-        if (block_shape[i][j] != CANTSET)
-          continue;
-
-        int access_y = y + i - 2;
-        int access_x = x + j - 2;
-
-        if (access_y < 0 || access_y >= TILE_NUMBER + 2 || access_x < 0 ||
-            access_x >= TILE_NUMBER + 2)
-          continue;
-
-        int cell = status[col][access_y][access_x];
-
-        // 自分ブロック / OPBLOCK / CANTSET は置けない
-        if (cell == MYBLOCK || cell == CANTSET || cell == OPBLOCK)
-          return false;
-
-        if (cell == ABLESET)
-          found_corner = true; // 角接触
-      }
+  for (int y = 1; y <= TILE_NUMBER; ++y) {
+    for (int x = 1; x <= TILE_NUMBER; ++x) {
+      if (!(bit_status[y][x] & cant_bit) && settable_check(color, block, x, y))
+        res.push_back({x, y});
     }
-
-    return found_corner;
   }
+
+  return res;
+}
 
 vector<pair<int, int>>
-  Board::search_settable_position(Color color,
-                           const vector<vector<int>> &block_shape) {
-    vector<pair<int, int>> res;
-    int col = static_cast<int>(color);
+Board::search_settable_position(Color color,
+                                const vector<vector<int>> &block_shape) {
+  Block block = block_from_shape(block_shape);
+  return search_settable_position(color, block);
+}
 
-    for (int y = 1; y <= TILE_NUMBER; ++y) {
-      for (int x = 1; x <= TILE_NUMBER; ++x) {
-        if (status[col][y][x] != CANTSET) {
-          if (settable_check(color, block_shape, x, y))
-            res.push_back({x, y});
+vector<pair<int, int>>
+Board::search_settable_position_near_ableset(Color color, const Block &block) {
+  vector<pair<int, int>> res;
+  int col = static_cast<int>(color);
+  uint8_t able_bit = (col == 0) ? P1_ABLE_BIT : P2_ABLE_BIT;
+  uint8_t cant_bit = (col == 0) ? P1_CANT_BIT : P2_CANT_BIT;
+
+  bool candidates[BOARD_SIZE][BOARD_SIZE] = {};
+
+  for (int y = 1; y <= TILE_NUMBER; ++y) {
+    for (int x = 1; x <= TILE_NUMBER; ++x) {
+      if (!(bit_status[y][x] & able_bit))
+        continue;
+
+      for (int dy = -2; dy <= 2; ++dy) {
+        for (int dx = -2; dx <= 2; ++dx) {
+          int ny = y + dy;
+          int nx = x + dx;
+          if (1 <= ny && ny <= TILE_NUMBER && 1 <= nx && nx <= TILE_NUMBER)
+            candidates[ny][nx] = true;
         }
       }
     }
-
-    return res;
   }
+
+  for (int y = 1; y <= TILE_NUMBER; ++y) {
+    for (int x = 1; x <= TILE_NUMBER; ++x) {
+      if (candidates[y][x] && !(bit_status[y][x] & cant_bit) &&
+          settable_check(color, block, x, y)) {
+        res.push_back({x, y});
+      }
+    }
+  }
+
+  return res;
+}
 
 vector<pair<int, int>> Board::search_settable_position_near_ableset(
-      Color color, const vector<vector<int>> &block_shape) {
-    vector<pair<int, int>> res;
-    int col = static_cast<int>(color);
+    Color color, const vector<vector<int>> &block_shape) {
+  Block block = block_from_shape(block_shape);
+  return search_settable_position_near_ableset(color, block);
+}
 
-    std::set<pair<int, int>> candidates; // 重複防止
+vector<pair<int, int>> Board::search_settable_position_one_ableset(
+    Color color, const Block &block, int ax, int ay) {
+  vector<pair<int, int>> res;
+  int col = static_cast<int>(color);
+  uint8_t able_bit = (col == 0) ? P1_ABLE_BIT : P2_ABLE_BIT;
+  uint8_t cant_bit = (col == 0) ? P1_CANT_BIT : P2_CANT_BIT;
 
-    // --- ABLESET を起点に候補座標を収集 ---
-    for (int y = 1; y <= TILE_NUMBER; ++y) {
-      for (int x = 1; x <= TILE_NUMBER; ++x) {
-
-        if (status[col][y][x] != ABLESET)
-          continue;
-
-        // 周囲5マス（中心含む）
-        for (int dy = -2; dy <= 2; ++dy) {
-          for (int dx = -2; dx <= 2; ++dx) {
-            int ny = y + dy;
-            int nx = x + dx;
-
-            if (1 <= ny && ny <= TILE_NUMBER && 1 <= nx && nx <= TILE_NUMBER) {
-              candidates.insert({nx, ny});
-            }
-          }
-        }
-      }
-    }
-
-    // --- 実際に置けるかチェック ---
-    for (auto &[x, y] : candidates) {
-      if (status[col][y][x] != CANTSET) {
-        if (settable_check(color, block_shape, x, y)) {
-          res.push_back({x, y});
-        }
-      }
-    }
-
+  if (!(bit_status[ay][ax] & able_bit)) {
+    cout << "Error:It's not ABLESET! (by search settable position one "
+            "ableset())"
+         << endl;
     return res;
   }
 
-vector<pair<int, int>> Board::search_settable_position_one_ableset(
-      Color color, const vector<vector<int>> &block_shape, int ax, int ay) {
-
-    vector<pair<int, int>> res;
-    int col = static_cast<int>(color);
-
-    // ABLESET でなければ即終了
-    if (status[col][ay][ax] != ABLESET) {
-      cout << "Error:It's not ABLESET! (by search settable position one "
-              "ableset())"
-           << endl;
-      return res;
+  bool candidates[BOARD_SIZE][BOARD_SIZE] = {};
+  for (int dy = -2; dy <= 2; ++dy) {
+    for (int dx = -2; dx <= 2; ++dx) {
+      int ny = ay + dy;
+      int nx = ax + dx;
+      if (1 <= ny && ny <= TILE_NUMBER && 1 <= nx && nx <= TILE_NUMBER)
+        candidates[ny][nx] = true;
     }
+  }
 
-    std::set<pair<int, int>> candidates; // 重複防止
-
-    // --- 周囲候補生成（5×5） ---
-    for (int dy = -2; dy <= 2; ++dy) {
-      for (int dx = -2; dx <= 2; ++dx) {
-        int ny = ay + dy;
-        int nx = ax + dx;
-
-        if (1 <= ny && ny <= TILE_NUMBER && 1 <= nx && nx <= TILE_NUMBER) {
-          candidates.insert({nx, ny});
-        }
-      }
-    }
-
-    // --- 実際に置けるかチェック ---
-    for (auto &[cx, cy] : candidates) {
-      if (status[col][cy][cx] != CANTSET &&
-          settable_check(color, block_shape, cx, cy)) {
+  for (int cy = 1; cy <= TILE_NUMBER; ++cy) {
+    for (int cx = 1; cx <= TILE_NUMBER; ++cx) {
+      if (candidates[cy][cx] && !(bit_status[cy][cx] & cant_bit) &&
+          settable_check(color, block, cx, cy)) {
         res.emplace_back(cx, cy);
       }
     }
-
-    return res;
   }
+
+  return res;
+}
+
+vector<pair<int, int>> Board::search_settable_position_one_ableset(
+    Color color, const vector<vector<int>> &block_shape, int ax, int ay) {
+  Block block = block_from_shape(block_shape);
+  return search_settable_position_one_ableset(color, block, ax, ay);
+}
 
 std::optional<std::pair<int, int>>
-  Board::select_random_settable_position(Color color) {
-    vector<pair<int, int>> candidates;
-    int col = static_cast<int>(color);
+Board::select_random_settable_position(Color color) {
+  vector<pair<int, int>> candidates;
+  int col = static_cast<int>(color);
+  uint8_t able_bit = (col == 0) ? P1_ABLE_BIT : P2_ABLE_BIT;
 
-    // --- ABLESET を起点に候補座標を収集 ---
-    for (int y = 1; y <= TILE_NUMBER; ++y) {
-      for (int x = 1; x <= TILE_NUMBER; ++x) {
-        if (status[col][y][x] == ABLESET) {
-          candidates.emplace_back(x, y);
-        }
-      }
+  for (int y = 1; y <= TILE_NUMBER; ++y) {
+    for (int x = 1; x <= TILE_NUMBER; ++x) {
+      if (bit_status[y][x] & able_bit)
+        candidates.emplace_back(x, y);
     }
-    // 候補なし
-    if (candidates.empty()) {
-      cout << "No one ABLESET." << endl;
-      return std::nullopt;
-    }
-    // --- ランダムに1つ選択 ---
-    static thread_local std::mt19937 gen(std::random_device{}());
-    std::uniform_int_distribution<> dist(0, candidates.size() - 1);
-    return candidates[dist(gen)];
   }
 
+  if (candidates.empty()) {
+    cout << "No one ABLESET." << endl;
+    return std::nullopt;
+  }
+
+  static thread_local std::mt19937 gen(std::random_device{}());
+  std::uniform_int_distribution<> dist(0, candidates.size() - 1);
+  return candidates[dist(gen)];
+}
+
 void Board::change_status(Color color, Block &block, const std::string &block_id,
-                     int rotation, int x, int y, Player &player) {
-    block.rotate_block(rotation);
+                          int rotation, int x, int y, Player &player) {
+  block.rotate_block(rotation);
 
-    int col = static_cast<int>(color);
-    int opp_col = 1 - col; // 相手の色
-    int H = status[0].size();
-    int W = status[0][0].size();
+  int col = static_cast<int>(color);
+  int opp_col = 1 - col;
+  int H = status[0].size();
+  int W = status[0][0].size();
 
-    auto in_bounds = [&](int yy, int xx) {
-      return (0 <= yy && yy < H && 0 <= xx && xx < W);
-    };
+  auto in_bounds = [&](int yy, int xx) {
+    return (0 <= yy && yy < H && 0 <= xx && xx < W);
+  };
 
-    // --- 自分の盤面に shape を MYBLOCK として反映 ---
-    auto occupied = block.occupied_offsets();
-    for (const auto &offset : occupied) {
-      int yy = y + offset.y;
-      int xx = x + offset.x;
+  const auto &occupied = block.occupied_offsets();
+  for (const auto &offset : occupied) {
+    int yy = y + offset.y;
+    int xx = x + offset.x;
+    if (in_bounds(yy, xx))
+      set_cell_state(col, yy, xx, MYBLOCK);
+  }
+
+  int I = block.influence.size();
+  for (int r = 0; r < I; r++) {
+    for (int c = 0; c < I; c++) {
+      int yy = y + r - 3;
+      int xx = x + c - 3;
       if (!in_bounds(yy, xx))
         continue;
 
-      status[col][yy][xx] = MYBLOCK;
+      if (status[col][yy][xx] == MYBLOCK || status[col][yy][xx] == OPBLOCK)
+        continue;
+
+      if (block.influence[r][c] == CANTSET)
+        set_cell_state(col, yy, xx, CANTSET);
+      else if (block.influence[r][c] == ABLESET &&
+               status[col][yy][xx] == BLANK)
+        set_cell_state(col, yy, xx, ABLESET);
     }
-
-    // --- 自分の盤面に influence を適用（ABLESET / CANTSET） ---
-    int I = block.influence.size();
-    for (int r = 0; r < I; r++) {
-      for (int c = 0; c < I; c++) {
-        int yy = y + r - 3;
-        int xx = x + c - 3;
-        if (!in_bounds(yy, xx))
-          continue;
-
-        // 既に MYBLOCK / OPBLOCK がある場合は上書きしない
-        if (status[col][yy][xx] == MYBLOCK || status[col][yy][xx] == OPBLOCK)
-          continue;
-
-        if (block.influence[r][c] == CANTSET)
-          status[col][yy][xx] = CANTSET;
-        else if (block.influence[r][c] == ABLESET &&
-                 status[col][yy][xx] == BLANK)
-          status[col][yy][xx] = ABLESET;
-      }
-    }
-
-    // --- 相手の盤面に MYBLOCK を OPBLOCK として反映 ---
-    for (const auto &offset : occupied) {
-        int yy = y + offset.y;
-        int xx = x + offset.x;
-        if (!in_bounds(yy, xx))
-          continue;
-
-        // 相手盤面でも既に OPBLOCK があれば上書きしない
-        if (status[opp_col][yy][xx] != OPBLOCK)
-          status[opp_col][yy][xx] = OPBLOCK;
-    }
-
-    // --- used_blocks に追加 ---
-    player.used_blocks.push_back(block_id);
-    player.turn_num++;
-
-    // --- スコア加算 ---
-    auto it = block_table.find(block_id);
-    if (it != block_table.end())
-      player.score += it->second.score;
-
-    rebuild_bit_status();
   }
+
+  for (const auto &offset : occupied) {
+    int yy = y + offset.y;
+    int xx = x + offset.x;
+    if (!in_bounds(yy, xx))
+      continue;
+
+    if (status[opp_col][yy][xx] != OPBLOCK)
+      set_cell_state(opp_col, yy, xx, OPBLOCK);
+  }
+
+  player.used_blocks.push_back(block_id);
+  player.turn_num++;
+
+  auto it = block_table.find(block_id);
+  if (it != block_table.end())
+    player.score += it->second.score;
+}
 
 void Board::print_status(Color color) {
-    int col = static_cast<int>(color);
+  int col = static_cast<int>(color);
 
-    for (int y = 0; y < TILE_NUMBER + 2; y++) {
-      for (int x = 0; x < TILE_NUMBER + 2; x++) {
-        int cell = status[col][y][x];
-        switch (cell) {
-        case 0: // BLANK
-          cout << ". ";
-          break;
-        case 1: // CANTSET
-          cout << "# ";
-          break;
-        case 2: // ABLESET
-          cout << "* ";
-          break;
-        case 3: // MYBLOCK
-          cout << "\033[32m"
-               << "3 "
-               << "\033[0m"; // 緑
-          break;
-        case 4: // OPBLOCK
-          cout << "\033[31m"
-               << "4 "
-               << "\033[0m"; // 赤
-          break;
-        default:
-          cout << cell << " ";
-          break;
-        }
+  for (int y = 0; y < TILE_NUMBER + 2; y++) {
+    for (int x = 0; x < TILE_NUMBER + 2; x++) {
+      int cell = status[col][y][x];
+      switch (cell) {
+      case 0:
+        cout << ". ";
+        break;
+      case 1:
+        cout << "# ";
+        break;
+      case 2:
+        cout << "* ";
+        break;
+      case 3:
+        cout << "\033[32m"
+             << "3 "
+             << "\033[0m";
+        break;
+      case 4:
+        cout << "\033[31m"
+             << "4 "
+             << "\033[0m";
+        break;
+      default:
+        cout << cell << " ";
+        break;
       }
-      cout << endl;
     }
+    cout << endl;
   }
+}
 
 GamePhase Board::get_phase(const Player &p1, const Player &p2) const {
-    int total_score = p1.score + p2.score;
+  int total_score = p1.score + p2.score;
 
-    if (total_score <= 39) {
-      return GamePhase::OPENING;
-    } else if (total_score <= 99) {
-      return GamePhase::MIDDLE;
-    } else {
-      return GamePhase::ENDING;
-    }
+  if (total_score <= 39) {
+    return GamePhase::OPENING;
+  } else if (total_score <= 99) {
+    return GamePhase::MIDDLE;
+  } else {
+    return GamePhase::ENDING;
   }
+}

@@ -43,7 +43,7 @@ vector<Move> get_all_legal_moves(Board &board, Color player_color,
       tmp_block.rotate_block(rot);
 
       auto positions = board.search_settable_position_near_ableset(
-          player_color, tmp_block.shape);
+          player_color, tmp_block);
       // board.search_settable_position_near_ableset(player_color,tmp_block.shape);
 
       for (auto &[x, y] : positions) {
@@ -88,7 +88,7 @@ vector<Move> get_fast_legal_moves(Board &board, Color color, Player &player,
     tmp.rotate_block(rot);
 
     auto positions =
-        board.search_settable_position_near_ableset(color, tmp.shape);
+        board.search_settable_position_near_ableset(color, tmp);
 
     for (auto &[x, y] : positions) {
       moves.emplace_back(block_id, x, y, rot);
@@ -139,7 +139,7 @@ vector<Move> get_one_legal_moves(Board &board, Color color, Player &player,
       tmp.rotate_block(rot);
 
       auto positions =
-          board.search_settable_position_near_ableset(color, tmp.shape);
+          board.search_settable_position_near_ableset(color, tmp);
 
       for (auto &[x, y] : positions) {
         moves.emplace_back(block_id, x, y, rot);
@@ -198,7 +198,7 @@ vector<Move> get_oneable_legal_moves(Board &board, Color color,
       tmp.rotate_block(rot);
 
       auto positions =
-          board.search_settable_position_one_ableset(color, tmp.shape, ax, ay);
+          board.search_settable_position_one_ableset(color, tmp, ax, ay);
 
       for (auto &[x, y] : positions) {
         moves.emplace_back(block_id, x, y, rot);
@@ -228,7 +228,7 @@ get_legal_moves_no_pos(Board &board, Color player_color, Player &player) {
 
       // 置ける場所が1つでもあれば合法手とみなす
       auto positions =
-          board.search_settable_position(player_color, tmp_block.shape);
+          board.search_settable_position(player_color, tmp_block);
       if (!positions.empty()) {
         legal_moves.emplace_back(id, rot);
       }
@@ -259,7 +259,7 @@ vector<string> get_legal_block_types(Board &board, Color player_color,
       tmp_block.rotate_block(rot);
 
       auto positions =
-          board.search_settable_position(player_color, tmp_block.shape);
+          board.search_settable_position(player_color, tmp_block);
       if (!positions.empty()) {
         can_place = true;
         break; // 1つでも置ければ十分
@@ -488,6 +488,14 @@ double heuristic_playout(Board board, Player p1, Player p2, Color turn) {
   return evaluate(board, p1, p2, turn, phase);
 }
 
+static vector<std::uint16_t> pack_moves(const vector<Move> &moves) {
+  vector<std::uint16_t> packed;
+  packed.reserve(moves.size());
+  for (const auto &move : moves)
+    packed.push_back(move.packed());
+  return packed;
+}
+
 struct MCTSNode {
   Board board;
   Player player1;
@@ -503,18 +511,21 @@ struct MCTSNode {
 
   int depth;
 
-  std::vector<Move> untried_moves;
+  std::vector<std::uint16_t> untried_moves;
 
   // このノードへの着手
-  std::string move_block_id;
-  int move_x, move_y, move_rot;
+  std::uint16_t packed_move;
 
   MCTSNode(const Board &b, const Player &p1, const Player &p2, Color turn,
            MCTSNode *parent = nullptr)
       : board(b), player1(p1), player2(p2), current_player(turn),
-        parent(parent), visit_count(0), win_score(0.0), move_x(-1), move_y(-1),
-        move_rot(0), move_block_id("") {
+        parent(parent), visit_count(0), win_score(0.0),
+        packed_move(Move::PASS_CODE) {
     depth = (parent == nullptr) ? 0 : parent->depth + 1;
+  }
+
+  Move move() const {
+    return Move::from_packed(packed_move);
   }
 
   // --- Selection: UCB1 で子ノード選択 ---
@@ -553,7 +564,7 @@ struct MCTSNode {
     std::uniform_int_distribution<> dis(0, (int)untried_moves.size() - 1);
 
     int idx = dis(gen);
-    Move move = untried_moves[idx];
+    Move move = Move::from_packed(untried_moves[idx]);
 
     // 選んだ手を未展開リストから削除
     untried_moves.erase(untried_moves.begin() + idx);
@@ -580,10 +591,7 @@ struct MCTSNode {
         new MCTSNode(next_board, next_p1, next_p2, next_turn, this);
 
     // 子ノードの着手情報を設定
-    child->move_block_id = move.block_id;
-    child->move_x = move.x;
-    child->move_y = move.y;
-    child->move_rot = move.rotation;
+    child->packed_move = move.packed();
 
     // 子を追加
     children.push_back(child);
@@ -592,7 +600,7 @@ struct MCTSNode {
     Player *next_player =
         (next_turn == Color::PLAYER1) ? &child->player1 : &child->player2;
     child->untried_moves =
-        get_all_legal_moves(child->board, next_turn, *next_player);
+        pack_moves(get_all_legal_moves(child->board, next_turn, *next_player));
 
     return child;
   }
@@ -730,14 +738,15 @@ void print_tree_recursive(MCTSNode *node, int depth, int max_depth, int top_k,
 
   for (int i = 0; i < limit; i++) {
     MCTSNode *c = children[i];
+    Move c_move = c->move();
 
     double Q = (c->visit_count > 0) ? c->win_score / c->visit_count : 0.0;
 
     std::cout << prefix << "[D" << depth << " -> " << i << "] "
               << "turn=" << color_to_string(c->current_player) << " "
-              << "move=" << c->move_block_id << " (" << c->move_x << ","
-              << c->move_y << ")"
-              << " rot=" << c->move_rot << " | N=" << c->visit_count
+              << "move=" << c_move.block_id << " (" << c_move.x << ","
+              << c_move.y << ")"
+              << " rot=" << c_move.rotation << " | N=" << c->visit_count
               << " | W=" << c->win_score << " | Q=" << Q
               << " | eval=" << c->eval_value << "\n";
 
@@ -761,12 +770,13 @@ void print_tree_2level(MCTSNode *root, int top_children = 3,
 
   for (int i = 0; i < c_limit; i++) {
     MCTSNode *c = children[i];
+    Move c_move = c->move();
     double Qc = (c->visit_count > 0) ? c->win_score / c->visit_count : 0.0;
 
     std::cout << "[Root -> " << i << "] "
-              << "move=" << c->move_block_id << " (" << c->move_x << ","
-              << c->move_y << ")"
-              << " rot=" << c->move_rot << " | N=" << c->visit_count
+              << "move=" << c_move.block_id << " (" << c_move.x << ","
+              << c_move.y << ")"
+              << " rot=" << c_move.rotation << " | N=" << c->visit_count
               << " | W=" << c->win_score << " | Q=" << Qc
               << " | eval=" << c->eval_value << "\n";
 
@@ -780,12 +790,13 @@ void print_tree_2level(MCTSNode *root, int top_children = 3,
 
     for (int j = 0; j < g_limit; j++) {
       MCTSNode *g = gchildren[j];
+      Move g_move = g->move();
       double Qg = (g->visit_count > 0) ? g->win_score / g->visit_count : 0.0;
 
       std::cout << "     -> [" << j << "] "
-                << "move=" << g->move_block_id << " (" << g->move_x << ","
-                << g->move_y << ")"
-                << " rot=" << g->move_rot << " | N=" << g->visit_count
+                << "move=" << g_move.block_id << " (" << g_move.x << ","
+                << g_move.y << ")"
+                << " rot=" << g_move.rotation << " | N=" << g->visit_count
                 << " | W=" << g->win_score << " | Q=" << Qg
                 << " | eval=" << g->eval_value << "\n";
     }
@@ -814,10 +825,10 @@ Move MCTS(Board root_board, Player root_p1, Player root_p2, Color root_turn,
   // ルートの未展開手のセット
   if (root_turn == Color::PLAYER1)
     root->untried_moves =
-        get_all_legal_moves(root_board, Color::PLAYER1, root_p1);
+        pack_moves(get_all_legal_moves(root_board, Color::PLAYER1, root_p1));
   else
     root->untried_moves =
-        get_all_legal_moves(root_board, Color::PLAYER2, root_p2);
+        pack_moves(get_all_legal_moves(root_board, Color::PLAYER2, root_p2));
 
   if (root->untried_moves.empty()) {
     std::cout << "[MCTS] No moves available.\n";
@@ -910,12 +921,10 @@ Move MCTS(Board root_board, Player root_p1, Player root_p2, Color root_turn,
     return Move();
   }
 
-  Move best_move(best_child->move_block_id, best_child->move_x,
-                 best_child->move_y, best_child->move_rot);
+  Move best_move = best_child->move();
 
-  cout << "[MCTS] Best move: " << best_child->move_block_id << " ("
-       << best_child->move_x << "," << best_child->move_y
-       << ") rot=" << best_child->move_rot << "\n";
+  cout << "[MCTS] Best move: " << best_move.block_id << " (" << best_move.x
+       << "," << best_move.y << ") rot=" << best_move.rotation << "\n";
   // 最良手を返す
 
   // ツリー解放

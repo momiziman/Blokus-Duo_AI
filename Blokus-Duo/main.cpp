@@ -4,7 +4,7 @@ int main() {
   const int TILE_NUMBER = 14;
   const int MAX_TREE_DEPTH = 10;
   int iterations = 300;
-  int N = 50;
+  int N = 10;
   AIType p1_ai = AIType::MCTS_EVAL;
   AIType p2_ai = AIType::RANDOM;
 
