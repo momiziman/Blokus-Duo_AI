@@ -19,11 +19,7 @@ enum class AIType { RANDOM, MCTS_WIN, MCTS_EVAL };
 
 enum class GameResult { P1_WIN, P2_WIN, DRAW };
 
-enum class GamePhase {
-  OPENING,
-  MIDDLE,
-  ENDING
-};
+enum class GamePhase { OPENING, MIDDLE, ENDING };
 
 enum TileState {
   BLANK = 0,
@@ -53,9 +49,7 @@ struct Move {
   Move(std::string block_id, int x, int y, int rotation)
       : block_id(std::move(block_id)), x(x), y(y), rotation(rotation) {}
 
-  bool is_pass() const {
-    return block_id.empty();
-  }
+  bool is_pass() const { return block_id.empty(); }
 
   bool is_valid() const {
     if (is_pass())
@@ -63,8 +57,8 @@ struct Move {
     if (block_id.size() != 1)
       return false;
     int block_index = block_id[0] - 'a';
-    return 0 <= block_index && block_index < 21 && 0 <= x && x < 16 &&
-           0 <= y && y < 16 && 0 <= rotation && rotation < 8;
+    return 0 <= block_index && block_index < 21 && 0 <= x && x < 16 && 0 <= y &&
+           y < 16 && 0 <= rotation && rotation < 8;
   }
 
   std::uint16_t packed() const {
@@ -73,8 +67,7 @@ struct Move {
     if (!is_valid())
       return INVALID_CODE;
 
-    std::uint16_t block_index =
-        static_cast<std::uint16_t>(block_id[0] - 'a');
+    std::uint16_t block_index = static_cast<std::uint16_t>(block_id[0] - 'a');
     return static_cast<std::uint16_t>((block_index << 11) |
                                       ((rotation & 0x7) << 8) |
                                       ((x & 0xf) << 4) | (y & 0xf));

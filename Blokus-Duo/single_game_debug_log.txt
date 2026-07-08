@@ -1,0 +1,911 @@
+===== Single Game Debug Start =====
+P1 AI=RAND P2 AI=RAND
+random seed=20260627
+
+----- Step 1 -----
+turn=PLAYER1 ai=RAND phase=OPENING
+score before P1=0 P2=0
+used blocks count=0
+legal moves=712
+  candidate[0] move block=t x=5 y=4 rotation=0 packed=0x9854
+  candidate[1] move block=t x=4 y=5 rotation=0 packed=0x9845
+  candidate[2] move block=t x=5 y=5 rotation=0 packed=0x9855
+  candidate[3] move block=t x=6 y=5 rotation=0 packed=0x9865
+  candidate[4] move block=t x=6 y=6 rotation=0 packed=0x9866
+selection method=RANDOM
+selected move block=l x=5 y=5 rotation=0 packed=0x5855
+roundtrip move block=l x=5 y=5 rotation=0 packed=0x5855
+score after P1=5 P2=0
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# . . . . . . . . . . . . . . # 
+# . . . * # * . . . . . . . . # 
+# . . . # M # . . . . . . . . # 
+# . . * # M # . . . . . . . . # 
+# . . # M M # . . . . . . . . # 
+# . . # M # * . . . . . . . . # 
+# . . * # * . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 2 -----
+turn=PLAYER2 ai=RAND phase=OPENING
+score before P1=5 P2=0
+used blocks count=0
+legal moves=712
+  candidate[0] move block=t x=10 y=9 rotation=0 packed=0x98a9
+  candidate[1] move block=t x=9 y=10 rotation=0 packed=0x989a
+  candidate[2] move block=t x=10 y=10 rotation=0 packed=0x98aa
+  candidate[3] move block=t x=11 y=10 rotation=0 packed=0x98ba
+  candidate[4] move block=t x=11 y=11 rotation=0 packed=0x98bb
+selection method=RANDOM
+selected move block=f x=10 y=11 rotation=5 packed=0x2dab
+roundtrip move block=f x=10 y=11 rotation=5 packed=0x2dab
+score after P1=5 P2=4
+bit_status consistency=OK
+board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . O . . . . . . . . . # 
+# . . . . O . . . . . . . . . # 
+# . . . O O . . . . . . . . . # 
+# . . . O . . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . * # # * . . . # 
+# . . . . . . . # M M # . . . # 
+# . . . . . . . * # M # . . . # 
+# . . . . . . . . # M # . . . # 
+# . . . . . . . . * # * . . . # 
+# . . . . . . . . . . . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 3 -----
+turn=PLAYER1 ai=RAND phase=OPENING
+score before P1=5 P2=4
+used blocks count=1
+legal moves=948
+  candidate[0] move block=t x=3 y=2 rotation=0 packed=0x9832
+  candidate[1] move block=t x=7 y=2 rotation=0 packed=0x9872
+  candidate[2] move block=t x=2 y=4 rotation=0 packed=0x9824
+  candidate[3] move block=t x=2 y=7 rotation=0 packed=0x9827
+  candidate[4] move block=t x=7 y=7 rotation=0 packed=0x9877
+selection method=RANDOM
+selected move block=i x=7 y=2 rotation=7 packed=0x4772
+roundtrip move block=i x=7 y=2 rotation=7 packed=0x4772
+score after P1=9 P2=4
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# . . . . # M # * . . . . . . # 
+# . . . * # M M # . . . . . . # 
+# . . . # M # M # . . . . . . # 
+# . . * # M # # * . . . . . . # 
+# . . # M M # . . . . . . . . # 
+# . . # M # * . . . . . . . . # 
+# . . * # * . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . . O O . . . . # 
+# . . . . . . . . . O . . . . # 
+# . . . . . . . . . O . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 4 -----
+turn=PLAYER2 ai=RAND phase=OPENING
+score before P1=9 P2=4
+used blocks count=1
+legal moves=820
+  candidate[0] move block=t x=8 y=8 rotation=0 packed=0x9888
+  candidate[1] move block=t x=11 y=8 rotation=0 packed=0x98b8
+  candidate[2] move block=t x=7 y=9 rotation=0 packed=0x9879
+  candidate[3] move block=t x=12 y=9 rotation=0 packed=0x98c9
+  candidate[4] move block=t x=7 y=11 rotation=0 packed=0x987b
+selection method=RANDOM
+selected move block=q x=13 y=13 rotation=1 packed=0x81dd
+roundtrip move block=q x=13 y=13 rotation=1 packed=0x81dd
+score after P1=9 P2=9
+bit_status consistency=OK
+board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# . . . . . O . . . . . . . . # 
+# . . . . . O O . . . . . . . # 
+# . . . . O . O . . . . . . . # 
+# . . . . O . . . . . . . . . # 
+# . . . O O . . . . . . . . . # 
+# . . . O . . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . . . . . . . . # 
+# . . . . . . . * # # * . . . # 
+# . . . . . . . # M M # * # * # 
+# . . . . . . . * # M # # M # # 
+# . . . . . . . . # M # # M # # 
+# . . . . . . . . * # M M M # # 
+# . . . . . . . . . * # # # * # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 5 -----
+turn=PLAYER1 ai=RAND phase=OPENING
+score before P1=9 P2=9
+used blocks count=2
+legal moves=988
+  candidate[0] move block=t x=3 y=2 rotation=0 packed=0x9832
+  candidate[1] move block=t x=2 y=4 rotation=0 packed=0x9824
+  candidate[2] move block=t x=9 y=5 rotation=0 packed=0x9895
+  candidate[3] move block=t x=2 y=7 rotation=0 packed=0x9827
+  candidate[4] move block=t x=7 y=7 rotation=0 packed=0x9877
+selection method=RANDOM
+selected move block=m x=7 y=7 rotation=5 packed=0x6577
+roundtrip move block=m x=7 y=7 rotation=5 packed=0x6577
+score after P1=14 P2=9
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# . . . . # M # * . . . . . . # 
+# . . . * # M M # . . . . . . # 
+# . . . # M # M # . . . . . . # 
+# . . * # M # # * . . . . . . # 
+# . . # M M # # * . . . . . . # 
+# . . # M # M M # . . . . . . # 
+# . . * # # M M # . . . . . . # 
+# . . . . * # M # . . . . . . # 
+# . . . . . * # * . . . . . . # 
+# . . . . . . . . O O . . . . # 
+# . . . . . . . . . O . . O . # 
+# . . . . . . . . . O . . O . # 
+# . . . . . . . . . . O O O . # 
+# . . . . . . . . . . . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 6 -----
+turn=PLAYER2 ai=RAND phase=OPENING
+score before P1=14 P2=9
+used blocks count=2
+legal moves=681
+  candidate[0] move block=t x=11 y=8 rotation=0 packed=0x98b8
+  candidate[1] move block=t x=7 y=9 rotation=0 packed=0x9879
+  candidate[2] move block=t x=12 y=9 rotation=0 packed=0x98c9
+  candidate[3] move block=t x=7 y=11 rotation=0 packed=0x987b
+  candidate[4] move block=t x=8 y=13 rotation=0 packed=0x988d
+selection method=RANDOM
+selected move block=a x=8 y=11 rotation=3 packed=0x038b
+roundtrip move block=a x=8 y=11 rotation=3 packed=0x038b
+score after P1=14 P2=10
+bit_status consistency=OK
+board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# . . . . . O . . . . . . . . # 
+# . . . . . O O . . . . . . . # 
+# . . . . O . O . . . . . . . # 
+# . . . . O . . . . . . . . . # 
+# . . . O O . . . . . . . . . # 
+# . . . O . O O . . . . . . . # 
+# . . . . . O O . . . . . . . # 
+# . . . . . . O . . . . . . . # 
+# . . . . . . . * # # * . . . # 
+# . . . . . . * # M M # * # * # 
+# . . . . . . # M # M # # M # # 
+# . . . . . . * # # M # # M # # 
+# . . . . . . . . * # M M M # # 
+# . . . . . . . . . * # # # * # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 7 -----
+turn=PLAYER1 ai=RAND phase=OPENING
+score before P1=14 P2=10
+used blocks count=3
+legal moves=979
+  candidate[0] move block=t x=3 y=2 rotation=0 packed=0x9832
+  candidate[1] move block=t x=2 y=4 rotation=0 packed=0x9824
+  candidate[2] move block=t x=9 y=5 rotation=0 packed=0x9895
+  candidate[3] move block=t x=2 y=7 rotation=0 packed=0x9827
+  candidate[4] move block=t x=4 y=8 rotation=0 packed=0x9848
+selection method=RANDOM
+selected move block=b x=3 y=4 rotation=5 packed=0x0d34
+roundtrip move block=b x=3 y=4 rotation=5 packed=0x0d34
+score after P1=16 P2=10
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# . . . . # M # * . . . . . . # 
+# . * # * # M M # . . . . . . # 
+# . # M # M # M # . . . . . . # 
+# . # M # M # # * . . . . . . # 
+# . * # M M # # * . . . . . . # 
+# . . # M # M M # . . . . . . # 
+# . . * # # M M # . . . . . . # 
+# . . . . * # M # . . . . . . # 
+# . . . . . * # * . . . . . . # 
+# . . . . . . . . O O . . . . # 
+# . . . . . . . O . O . . O . # 
+# . . . . . . . . . O . . O . # 
+# . . . . . . . . . . O O O . # 
+# . . . . . . . . . . . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 8 -----
+turn=PLAYER2 ai=RAND phase=OPENING
+score before P1=16 P2=10
+used blocks count=3
+legal moves=711
+  candidate[0] move block=t x=11 y=8 rotation=0 packed=0x98b8
+  candidate[1] move block=t x=7 y=9 rotation=0 packed=0x9879
+  candidate[2] move block=t x=12 y=9 rotation=0 packed=0x98c9
+  candidate[3] move block=t x=6 y=10 rotation=0 packed=0x986a
+  candidate[4] move block=t x=6 y=12 rotation=0 packed=0x986c
+selection method=RANDOM
+selected move block=m x=12 y=8 rotation=0 packed=0x60c8
+roundtrip move block=m x=12 y=8 rotation=0 packed=0x60c8
+score after P1=16 P2=15
+bit_status consistency=OK
+board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# . . . . . O . . . . . . . . # 
+# . . . . . O O . . . . . . . # 
+# . . O . O . O . . . . . . . # 
+# . . O . O . . . . . . . . . # 
+# . . . O O . . . . . . . . . # 
+# . . . O . O O . . . * # * . # 
+# . . . . . O O . . * # M # . # 
+# . . . . . . O . . # M M # . # 
+# . . . . . . . * # # M M # . # 
+# . . . . . . * # M M # # # * # 
+# . . . . . . # M # M # # M # # 
+# . . . . . . * # # M # # M # # 
+# . . . . . . . . * # M M M # # 
+# . . . . . . . . . * # # # * # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 9 -----
+turn=PLAYER1 ai=RAND phase=OPENING
+score before P1=16 P2=15
+used blocks count=4
+legal moves=808
+  candidate[0] move block=t x=9 y=5 rotation=0 packed=0x9895
+  candidate[1] move block=t x=2 y=7 rotation=0 packed=0x9827
+  candidate[2] move block=t x=4 y=8 rotation=0 packed=0x9848
+  candidate[3] move block=t x=5 y=9 rotation=0 packed=0x9859
+  candidate[4] move block=t x=7 y=10 rotation=0 packed=0x987a
+selection method=RANDOM
+selected move block=a x=6 y=9 rotation=5 packed=0x0569
+roundtrip move block=a x=6 y=9 rotation=5 packed=0x0569
+score after P1=17 P2=15
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# . . . . # M # * . . . . . . # 
+# . * # * # M M # . . . . . . # 
+# . # M # M # M # . . . . . . # 
+# . # M # M # # * . . . . . . # 
+# . * # M M # # * . . . . . . # 
+# . . # M # M M # . . . . . . # 
+# . . * # # M M # . . . O . . # 
+# . . . . * # M # . . O O . . # 
+# . . . . # M # * . . O O . . # 
+# . . . . * # * . O O . . . . # 
+# . . . . . . . O . O . . O . # 
+# . . . . . . . . . O . . O . # 
+# . . . . . . . . . . O O O . # 
+# . . . . . . . . . . . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 10 -----
+turn=PLAYER2 ai=RAND phase=OPENING
+score before P1=17 P2=15
+used blocks count=4
+legal moves=766
+  candidate[0] move block=t x=11 y=5 rotation=0 packed=0x98b5
+  candidate[1] move block=t x=13 y=5 rotation=0 packed=0x98d5
+  candidate[2] move block=t x=10 y=6 rotation=0 packed=0x98a6
+  candidate[3] move block=t x=9 y=7 rotation=0 packed=0x9897
+  candidate[4] move block=t x=6 y=10 rotation=0 packed=0x986a
+selection method=RANDOM
+selected move block=d x=13 y=5 rotation=5 packed=0x1dd5
+roundtrip move block=d x=13 y=5 rotation=5 packed=0x1dd5
+score after P1=17 P2=18
+bit_status consistency=OK
+board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# . . . . . O . . . . . . . . # 
+# . . . . . O O . . . . . . . # 
+# . . O . O . O . . . . . . . # 
+# . . O . O . . . . . . * # # # 
+# . . . O O . . . . . . # M M # 
+# . . . O . O O . . . * # M # # 
+# . . . . . O O . . * # M # * # 
+# . . . . . . O . . # M M # . # 
+# . . . . . O . * # # M M # . # 
+# . . . . . . * # M M # # # * # 
+# . . . . . . # M # M # # M # # 
+# . . . . . . * # # M # # M # # 
+# . . . . . . . . * # M M M # # 
+# . . . . . . . . . * # # # * # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 11 -----
+turn=PLAYER1 ai=RAND phase=OPENING
+score before P1=17 P2=18
+used blocks count=5
+legal moves=721
+  candidate[0] move block=t x=9 y=5 rotation=0 packed=0x9895
+  candidate[1] move block=t x=2 y=7 rotation=0 packed=0x9827
+  candidate[2] move block=t x=4 y=8 rotation=0 packed=0x9848
+  candidate[3] move block=t x=4 y=10 rotation=0 packed=0x984a
+  candidate[4] move block=t x=6 y=11 rotation=0 packed=0x986b
+selection method=RANDOM
+selected move block=t x=4 y=9 rotation=2 packed=0x9a49
+roundtrip move block=t x=4 y=9 rotation=2 packed=0x9a49
+score after P1=22 P2=18
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# . . . . # M # * . . . . . . # 
+# . * # * # M M # . . . . . . # 
+# . # M # M # M # . . . . . . # 
+# . # M # M # # * . . . . . . # 
+# . * # M M # # * . . . . O O # 
+# . . # M # M M # . . . . O . # 
+# . . * # # M M # . . . O . . # 
+# . * # M M # M # . . O O . . # 
+# . # M M # M # * . . O O . . # 
+# . * # M # # * . O O . . . . # 
+# . . * # * . . O . O . . O . # 
+# . . . . . . . . . O . . O . # 
+# . . . . . . . . . . O O O . # 
+# . . . . . . . . . . . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 12 -----
+turn=PLAYER2 ai=RAND phase=MIDDLE
+score before P1=22 P2=18
+used blocks count=5
+legal moves=724
+  candidate[0] move block=t x=12 y=3 rotation=0 packed=0x98c3
+  candidate[1] move block=t x=11 y=4 rotation=0 packed=0x98b4
+  candidate[2] move block=t x=10 y=6 rotation=0 packed=0x98a6
+  candidate[3] move block=t x=9 y=7 rotation=0 packed=0x9897
+  candidate[4] move block=t x=6 y=10 rotation=0 packed=0x986a
+selection method=RANDOM
+selected move block=i x=10 y=5 rotation=0 packed=0x40a5
+roundtrip move block=i x=10 y=5 rotation=0 packed=0x40a5
+score after P1=22 P2=22
+bit_status consistency=OK
+board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# . . . . . O . . . . . . . . # 
+# . . . . . O O . . . . . . . # 
+# . . O . O . O . . . . . . . # 
+# . . O . O . . * # # * * # # # 
+# . . . O O . . # M M # # M M # 
+# . . . O . O O * # M M # M # # 
+# . . . . . O O . * # # M # * # 
+# . . . O O . O . . # M M # . # 
+# . . O O . O . * # # M M # . # 
+# . . . O . . * # M M # # # * # 
+# . . . . . . # M # M # # M # # 
+# . . . . . . * # # M # # M # # 
+# . . . . . . . . * # M M M # # 
+# . . . . . . . . . * # # # * # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 13 -----
+turn=PLAYER1 ai=RAND phase=MIDDLE
+score before P1=22 P2=22
+used blocks count=6
+legal moves=600
+  candidate[0] move block=s x=2 y=11 rotation=0 packed=0x902b
+  candidate[1] move block=s x=4 y=12 rotation=0 packed=0x904c
+  candidate[2] move block=s x=6 y=12 rotation=0 packed=0x906c
+  candidate[3] move block=s x=9 y=4 rotation=1 packed=0x9194
+  candidate[4] move block=s x=9 y=9 rotation=1 packed=0x9199
+selection method=RANDOM
+selected move block=u x=5 y=12 rotation=7 packed=0xa75c
+roundtrip move block=u x=5 y=12 rotation=7 packed=0xa75c
+score after P1=27 P2=22
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# . . . . # M # * . . . . . . # 
+# . * # * # M M # . . . . . . # 
+# . # M # M # M # . . . . . . # 
+# . # M # M # # * . . . . . . # 
+# . * # M M # # * O O . . O O # 
+# . . # M # M M # . O O . O . # 
+# . . * # # M M # . . . O . . # 
+# . * # M M # M # . . O O . . # 
+# . # M M # M # * . . O O . . # 
+# . * # M # # * . O O . . . . # 
+# . . * # M # * O . O . . O . # 
+# . . # M M M # . . O . . O . # 
+# . . * # M # * . . . O O O . # 
+# . . . * # * . . . . . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 14 -----
+turn=PLAYER2 ai=RAND phase=MIDDLE
+score before P1=27 P2=22
+used blocks count=6
+legal moves=404
+  candidate[0] move block=t x=11 y=3 rotation=0 packed=0x98b3
+  candidate[1] move block=t x=12 y=3 rotation=0 packed=0x98c3
+  candidate[2] move block=t x=7 y=4 rotation=0 packed=0x9874
+  candidate[3] move block=t x=6 y=10 rotation=0 packed=0x986a
+  candidate[4] move block=t x=8 y=13 rotation=0 packed=0x988d
+selection method=RANDOM
+selected move block=g x=7 y=13 rotation=7 packed=0x377d
+roundtrip move block=g x=7 y=13 rotation=7 packed=0x377d
+score after P1=27 P2=26
+bit_status consistency=OK
+board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# . . . . . O . . . . . . . . # 
+# . . . . . O O . . . . . . . # 
+# . . O . O . O . . . . . . . # 
+# . . O . O . . * # # * * # # # 
+# . . . O O . . # M M # # M M # 
+# . . . O . O O * # M M # M # # 
+# . . . . . O O . * # # M # * # 
+# . . . O O . O . . # M M # . # 
+# . . O O . O . * # # M M # . # 
+# . . . O . . * # M M # # # * # 
+# . . . . O * # M # M # # M # # 
+# . . . O O O M # # M # # M # # 
+# . . . . O M M M # # M M M # # 
+# . . . . * # # # * * # # # * # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 15 -----
+turn=PLAYER1 ai=RAND phase=MIDDLE
+score before P1=27 P2=26
+used blocks count=7
+legal moves=419
+  candidate[0] move block=s x=2 y=13 rotation=0 packed=0x902d
+  candidate[1] move block=s x=9 y=4 rotation=1 packed=0x9194
+  candidate[2] move block=s x=9 y=9 rotation=1 packed=0x9199
+  candidate[3] move block=s x=9 y=3 rotation=2 packed=0x9293
+  candidate[4] move block=s x=9 y=8 rotation=2 packed=0x9298
+selection method=RANDOM
+selected move block=c x=2 y=7 rotation=0 packed=0x1027
+roundtrip move block=c x=2 y=7 rotation=0 packed=0x1027
+score after P1=30 P2=26
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# . . . . # M # * . . . . . . # 
+# . * # * # M M # . . . . . . # 
+# . # M # M # M # . . . . . . # 
+# . # M # M # # * . . . . . . # 
+# * # # M M # # * O O . . O O # 
+# # M # M # M M # . O O . O . # 
+# # M # # # M M # . . . O . . # 
+# # M # M M # M # . . O O . . # 
+# * # M M # M # * . . O O . . # 
+# . * # M # # * . O O . . . . # 
+# . . * # M # * O . O . . O . # 
+# . . # M M M O . . O . . O . # 
+# . . * # M O O O . . O O O . # 
+# . . . * # * . . . . . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 16 -----
+turn=PLAYER2 ai=RAND phase=MIDDLE
+score before P1=30 P2=26
+used blocks count=7
+legal moves=315
+  candidate[0] move block=t x=11 y=3 rotation=0 packed=0x98b3
+  candidate[1] move block=t x=12 y=3 rotation=0 packed=0x98c3
+  candidate[2] move block=t x=7 y=4 rotation=0 packed=0x9874
+  candidate[3] move block=t x=6 y=10 rotation=0 packed=0x986a
+  candidate[4] move block=t x=11 y=3 rotation=1 packed=0x99b3
+selection method=RANDOM
+selected move block=c x=12 y=3 rotation=4 packed=0x14c3
+roundtrip move block=c x=12 y=3 rotation=4 packed=0x14c3
+score after P1=30 P2=29
+bit_status consistency=OK
+board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# . . . . . O . . . . * # * . # 
+# . . . . . O O . . . # M # . # 
+# . . O . O . O . . . # M # . # 
+# . . O . O . . * # # # M # # # 
+# . . . O O . . # M M # # M M # 
+# . O . O . O O * # M M # M # # 
+# . O . . . O O . * # # M # * # 
+# . O . O O . O . . # M M # . # 
+# . . O O . O . * # # M M # . # 
+# . . . O . . * # M M # # # * # 
+# . . . . O * # M # M # # M # # 
+# . . . O O O M # # M # # M # # 
+# . . . . O M M M # # M M M # # 
+# . . . . * # # # * * # # # * # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 17 -----
+turn=PLAYER1 ai=RAND phase=MIDDLE
+score before P1=30 P2=29
+used blocks count=8
+legal moves=285
+  candidate[0] move block=s x=2 y=13 rotation=0 packed=0x902d
+  candidate[1] move block=s x=9 y=4 rotation=1 packed=0x9194
+  candidate[2] move block=s x=9 y=9 rotation=1 packed=0x9199
+  candidate[3] move block=s x=9 y=3 rotation=2 packed=0x9293
+  candidate[4] move block=s x=9 y=8 rotation=2 packed=0x9298
+selection method=RANDOM
+selected move block=d x=2 y=11 rotation=1 packed=0x192b
+roundtrip move block=d x=2 y=11 rotation=1 packed=0x192b
+score after P1=33 P2=29
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# . . . . # M # * . . . . . . # 
+# . * # * # M M # . . . O . . # 
+# . # M # M # M # . . . O . . # 
+# . # M # M # # * . . . O . . # 
+# * # # M M # # * O O . . O O # 
+# # M # M # M M # . O O . O . # 
+# # M # # # M M # . . . O . . # 
+# # M # M M # M # . . O O . . # 
+# * # M M # M # * . . O O . . # 
+# # M # M # # * . O O . . . . # 
+# M M # # M # * O . O . . O . # 
+# # # # M M M O . . O . . O . # 
+# . . * # M O O O . . O O O . # 
+# . . . * # * . . . . . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 18 -----
+turn=PLAYER2 ai=RAND phase=MIDDLE
+score before P1=33 P2=29
+used blocks count=8
+legal moves=173
+  candidate[0] move block=t x=7 y=4 rotation=0 packed=0x9874
+  candidate[1] move block=t x=6 y=10 rotation=0 packed=0x986a
+  candidate[2] move block=t x=7 y=4 rotation=1 packed=0x9974
+  candidate[3] move block=t x=6 y=10 rotation=1 packed=0x996a
+  candidate[4] move block=t x=10 y=2 rotation=2 packed=0x9aa2
+selection method=RANDOM
+selected move block=n x=7 y=4 rotation=2 packed=0x6a74
+roundtrip move block=n x=7 y=4 rotation=2 packed=0x6a74
+score after P1=33 P2=34
+bit_status consistency=OK
+board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# . . . . . O . . . . * # * . # 
+# . . . . * O O # * . # M # . # 
+# . . O . O M O M # . # M # . # 
+# . . O . O M M M # # # M # # # 
+# . . . O O # # # M M # # M M # 
+# . O . O . O O * # M M # M # # 
+# . O . . . O O . * # # M # * # 
+# . O . O O . O . . # M M # . # 
+# . . O O . O . * # # M M # . # 
+# . O . O . . * # M M # # # * # 
+# O O . . O * # M # M # # M # # 
+# . . . O O O M # # M # # M # # 
+# . . . . O M M M # # M M M # # 
+# . . . . * # # # * * # # # * # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 19 -----
+turn=PLAYER1 ai=RAND phase=MIDDLE
+score before P1=33 P2=34
+used blocks count=9
+legal moves=113
+  candidate[0] move block=s x=9 y=9 rotation=1 packed=0x9199
+  candidate[1] move block=s x=9 y=8 rotation=2 packed=0x9298
+  candidate[2] move block=s x=9 y=2 rotation=3 packed=0x9392
+  candidate[3] move block=s x=9 y=9 rotation=5 packed=0x9599
+  candidate[4] move block=s x=9 y=8 rotation=6 packed=0x9698
+selection method=RANDOM
+selected move block=e x=7 y=14 rotation=6 packed=0x267e
+roundtrip move block=e x=7 y=14 rotation=6 packed=0x267e
+score after P1=37 P2=34
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# . . . . # M # * . . . . . . # 
+# . * # * # M M # . . . O . . # 
+# . # M # M O M O . . . O . . # 
+# . # M # M O O O . . . O . . # 
+# * # # M M # # * O O . . O O # 
+# # M # M # M M # . O O . O . # 
+# # M # # # M M # . . . O . . # 
+# # M # M M # M # . . O O . . # 
+# * # M M # M # * . . O O . . # 
+# # M # M # # * . O O . . . . # 
+# M M # # M # * O . O . . O . # 
+# # # # M M M O . . O . . O . # 
+# . . * # M O O O # * O O O . # 
+# . . . * # M M M M # . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 20 -----
+turn=PLAYER2 ai=RAND phase=MIDDLE
+score before P1=37 P2=34
+used blocks count=9
+legal moves=182
+  candidate[0] move block=t x=4 y=2 rotation=0 packed=0x9842
+  candidate[1] move block=t x=6 y=10 rotation=0 packed=0x986a
+  candidate[2] move block=t x=4 y=2 rotation=1 packed=0x9942
+  candidate[3] move block=t x=6 y=10 rotation=1 packed=0x996a
+  candidate[4] move block=t x=10 y=2 rotation=2 packed=0x9aa2
+selection method=RANDOM
+selected move block=b x=7 y=10 rotation=5 packed=0x0d7a
+roundtrip move block=b x=7 y=10 rotation=5 packed=0x0d7a
+score after P1=37 P2=36
+bit_status consistency=OK
+board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# . . . . . O . . . . * # * . # 
+# . . . . * O O # * . # M # . # 
+# . . O . O M O M # . # M # . # 
+# . . O . O M M M # # # M # # # 
+# . . . O O # # # M M # # M M # 
+# . O . O . O O * # M M # M # # 
+# . O . . . O O . * # # M # * # 
+# . O . O O * O * . # M M # . # 
+# . . O O . O M # # # M M # . # 
+# . O . O . # M # M M # # # * # 
+# O O . . O * # M # M # # M # # 
+# . . . O O O M # # M # # M # # 
+# . . . . O M M M # # M M M # # 
+# . . . . * O O O O * # # # * # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 21 -----
+turn=PLAYER1 ai=RAND phase=MIDDLE
+score before P1=37 P2=36
+used blocks count=10
+legal moves=88
+  candidate[0] move block=s x=9 y=9 rotation=1 packed=0x9199
+  candidate[1] move block=s x=9 y=8 rotation=2 packed=0x9298
+  candidate[2] move block=s x=9 y=2 rotation=3 packed=0x9392
+  candidate[3] move block=s x=9 y=9 rotation=5 packed=0x9599
+  candidate[4] move block=s x=9 y=8 rotation=6 packed=0x9698
+selection method=RANDOM
+selected move block=r x=9 y=9 rotation=1 packed=0x8999
+roundtrip move block=r x=9 y=9 rotation=1 packed=0x8999
+score after P1=42 P2=36
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# . . . . # M # * . . . . . . # 
+# . * # * # M M # . . . O . . # 
+# . # M # M O M O . . . O . . # 
+# . # M # M O O O . . . O . . # 
+# * # # M M # # * O O . . O O # 
+# # M # M # M M # . O O . O . # 
+# # M # # # M M # # # * O . . # 
+# # M # M M # M # M M O O . . # 
+# * # M M # M O M M # O O . . # 
+# # M # M # # O M O O . . . . # 
+# M M # # M # * O * O . . O . # 
+# # # # M M M O . . O . . O . # 
+# . . * # M O O O # * O O O . # 
+# . . . * # M M M M # . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 22 -----
+turn=PLAYER2 ai=RAND phase=MIDDLE
+score before P1=42 P2=36
+used blocks count=10
+legal moves=84
+  candidate[0] move block=t x=4 y=2 rotation=0 packed=0x9842
+  candidate[1] move block=t x=4 y=2 rotation=1 packed=0x9942
+  candidate[2] move block=t x=10 y=2 rotation=2 packed=0x9aa2
+  candidate[3] move block=t x=4 y=2 rotation=3 packed=0x9b42
+  candidate[4] move block=r x=9 y=2 rotation=0 packed=0x8892
+selection method=RANDOM
+selected move block=h x=5 y=2 rotation=4 packed=0x3c52
+roundtrip move block=h x=5 y=2 rotation=4 packed=0x3c52
+score after P1=42 P2=40
+bit_status consistency=OK
+board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# . . # M M O . . . . * # * . # 
+# . . # M M O O # * . # M # . # 
+# . . O # O M O M # . # M # . # 
+# . . O . O M M M # # # M # # # 
+# . . . O O # # # M M # # M M # 
+# . O . O . O O * # M M # M # # 
+# . O . . . O O . * # # M # * # 
+# . O . O O * O * O O M M # . # 
+# . . O O . O M O O # M M # . # 
+# . O . O . # M O M M # # # * # 
+# O O . . O * # M # M # # M # # 
+# . . . O O O M # # M # # M # # 
+# . . . . O M M M # # M M M # # 
+# . . . . * O O O O * # # # * # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 23 -----
+turn=PLAYER1 ai=RAND phase=MIDDLE
+score before P1=42 P2=40
+used blocks count=11
+legal moves=60
+  candidate[0] move block=s x=9 y=2 rotation=3 packed=0x9392
+  candidate[1] move block=s x=9 y=2 rotation=7 packed=0x9792
+  candidate[2] move block=q x=10 y=1 rotation=3 packed=0x83a1
+  candidate[3] move block=q x=10 y=1 rotation=4 packed=0x84a1
+  candidate[4] move block=o x=1 y=2 rotation=0 packed=0x7012
+selection method=RANDOM
+selected move block=o x=9 y=1 rotation=3 packed=0x7391
+roundtrip move block=o x=9 y=1 rotation=3 packed=0x7391
+score after P1=47 P2=40
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# . . . O O M # M M M M # . . # 
+# . * # O O M M # M # # O . . # 
+# . # M # M O M O # * . O . . # 
+# . # M # M O O O . . . O . . # 
+# * # # M M # # * O O . . O O # 
+# # M # M # M M # . O O . O . # 
+# # M # # # M M # # # * O . . # 
+# # M # M M # M # M M O O . . # 
+# * # M M # M O M M # O O . . # 
+# # M # M # # O M O O . . . . # 
+# M M # # M # * O * O . . O . # 
+# # # # M M M O . . O . . O . # 
+# . . * # M O O O # * O O O . # 
+# . . . * # M M M M # . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 24 -----
+turn=PLAYER2 ai=RAND phase=MIDDLE
+score before P1=47 P2=40
+used blocks count=11
+legal moves=19
+  candidate[0] move block=r x=4 y=13 rotation=3 packed=0x8b4d
+  candidate[1] move block=r x=4 y=13 rotation=4 packed=0x8c4d
+  candidate[2] move block=o x=3 y=14 rotation=6 packed=0x763e
+  candidate[3] move block=o x=4 y=14 rotation=7 packed=0x774e
+  candidate[4] move block=k x=3 y=14 rotation=2 packed=0x523e
+selection method=RANDOM
+selected move block=k x=3 y=14 rotation=2 packed=0x523e
+roundtrip move block=k x=3 y=14 rotation=2 packed=0x523e
+score after P1=47 P2=45
+bit_status consistency=OK
+board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# . . # M M O . O O O O # * . # 
+# . . # M M O O # O . # M # . # 
+# . . O # O M O M # . # M # . # 
+# . . O . O M M M # # # M # # # 
+# . . . O O # # # M M # # M M # 
+# . O . O . O O * # M M # M # # 
+# . O . . . O O . * # # M # * # 
+# . O . O O * O * O O M M # . # 
+# . . O O . O M O O # M M # . # 
+# . O . O . # M O M M # # # * # 
+# O O . . O * # M # M # # M # # 
+# * # * O O O M # # M # # M # # 
+# # M # # O M M M # # M M M # # 
+# # M M M M O O O O * # # # * # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 25 -----
+turn=PLAYER1 ai=RAND phase=MIDDLE
+score before P1=47 P2=45
+used blocks count=12
+legal moves=31
+  candidate[0] move block=s x=11 y=4 rotation=3 packed=0x93b4
+  candidate[1] move block=s x=11 y=4 rotation=7 packed=0x97b4
+  candidate[2] move block=h x=1 y=1 rotation=0 packed=0x3811
+  candidate[3] move block=h x=10 y=3 rotation=0 packed=0x38a3
+  candidate[4] move block=h x=2 y=1 rotation=1 packed=0x3921
+selection method=RANDOM
+selected move block=g x=1 y=2 rotation=0 packed=0x3012
+roundtrip move block=g x=1 y=2 rotation=0 packed=0x3012
+score after P1=51 P2=45
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# M # * O O M # M M M M # . . # 
+# M M # O O M M # M # # O . . # 
+# M # M # M O M O # * . O . . # 
+# # # M # M O O O . . . O . . # 
+# * # # M M # # * O O . . O O # 
+# # M # M # M M # . O O . O . # 
+# # M # # # M M # # # * O . . # 
+# # M # M M # M # M M O O . . # 
+# * # M M # M O M M # O O . . # 
+# # M # M # # O M O O . . . . # 
+# M M # # M # * O * O . . O . # 
+# # # # M M M O . . O . . O . # 
+# . O * # M O O O # * O O O . # 
+# . O O O O M M M M # . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 26 -----
+turn=PLAYER2 ai=RAND phase=MIDDLE
+score before P1=51 P2=45
+used blocks count=12
+legal moves=4
+  candidate[0] move block=e x=14 y=8 rotation=0 packed=0x20e8
+  candidate[1] move block=e x=14 y=8 rotation=1 packed=0x21e8
+  candidate[2] move block=e x=14 y=9 rotation=4 packed=0x24e9
+  candidate[3] move block=e x=14 y=9 rotation=5 packed=0x25e9
+selection method=RANDOM
+selected move block=e x=14 y=9 rotation=5 packed=0x25e9
+roundtrip move block=e x=14 y=9 rotation=5 packed=0x25e9
+score after P1=51 P2=49
+bit_status consistency=OK
+board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# O . # M M O . O O O O # * . # 
+# O O # M M O O # O . # M # . # 
+# O . O # O M O M # . # M # . # 
+# . . O . O M M M # # # M # # # 
+# . . . O O # # # M M # # M M # 
+# . O . O . O O * # M M # M # # 
+# . O . . . O O . * # # M # M # 
+# . O . O O * O * O O M M # M # 
+# . . O O . O M O O # M M # M # 
+# . O . O . # M O M M # # # M # 
+# O O . . O * # M # M # # M # # 
+# * # * O O O M # # M # # M # # 
+# # M # # O M M M # # M M M # # 
+# # M M M M O O O O * # # # * # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 27 -----
+turn=PLAYER1 ai=RAND phase=ENDING
+score before P1=51 P2=49
+used blocks count=13
+legal moves=11
+  candidate[0] move block=s x=11 y=4 rotation=3 packed=0x93b4
+  candidate[1] move block=s x=11 y=4 rotation=7 packed=0x97b4
+  candidate[2] move block=h x=10 y=3 rotation=0 packed=0x38a3
+  candidate[3] move block=h x=11 y=3 rotation=1 packed=0x39b3
+  candidate[4] move block=h x=11 y=3 rotation=2 packed=0x3ab3
+selection method=RANDOM
+selected move block=f x=11 y=4 rotation=5 packed=0x2db4
+roundtrip move block=f x=11 y=4 rotation=5 packed=0x2db4
+score after P1=55 P2=49
+bit_status consistency=OK
+board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# M # * O O M # M M M M # . . # 
+# M M # O O M M # M # # O . . # 
+# M # M # M O M O # M M O . . # 
+# # # M # M O O O * # M O . . # 
+# * # # M M # # * O O M # O O # 
+# # M # M # M M # . O O * O . # 
+# # M # # # M M # # # * O . O # 
+# # M # M M # M # M M O O . O # 
+# * # M M # M O M M # O O . O # 
+# # M # M # # O M O O . . . O # 
+# M M # # M # * O * O . . O . # 
+# # # # M M M O . . O . . O . # 
+# . O * # M O O O # * O O O . # 
+# . O O O O M M M M # . . . . # 
+# # # # # # # # # # # # # # # # 
+
+----- Step 28 -----
+turn=PLAYER2 ai=RAND phase=ENDING
+score before P1=55 P2=49
+used blocks count=13
+legal moves=0
+result=PASS pass_count=1
+
+----- Step 29 -----
+turn=PLAYER1 ai=RAND phase=ENDING
+score before P1=55 P2=49
+used blocks count=14
+legal moves=0
+result=PASS pass_count=2
+
+===== Single Game Debug Result =====
+final score P1=55 P2=49
+winner=PLAYER1

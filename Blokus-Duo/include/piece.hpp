@@ -6,6 +6,7 @@ struct BlockData {
   std::array<std::array<int, 5>, 5> shape;
   std::array<std::array<int, 7>, 7> influence;
   int score;
+  std::array<std::vector<Position>, 8> rotations;
 };
 
 extern const std::unordered_map<std::string, BlockData> block_table;
@@ -15,6 +16,7 @@ struct Block {
   vector<vector<int>> shape;
   vector<vector<int>> influence;
   vector<Position> cells;
+  std::array<std::vector<Position>, 8> rotations;
 
   Block(const BlockData &data);
 

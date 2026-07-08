@@ -987,7 +987,7 @@ GameResult play_game(Board board, Player p1, Player p2, Color start_turn,
                << move.block_id << " at (" << move.x << "," << move.y
                << ") with rotation " << move.rotation << "\n";
         }
-        board.print_status(turn);
+        // board.print_status(turn);
       }
     }
 
@@ -995,14 +995,14 @@ GameResult play_game(Board board, Player p1, Player p2, Color start_turn,
   }
 
   if (p1.score > p2.score) {
-    board.print_status(Color::PLAYER1);
+    // board.print_status(Color::PLAYER1);
     cout << "Final Score - P1: " << p1.score << ", P2: " << p2.score << "\n";
     cout << "P1 is WIN!"
          << "\n";
     return GameResult::P1_WIN;
   }
   if (p2.score > p1.score) {
-    board.print_status(Color::PLAYER2);
+    // board.print_status(Color::PLAYER2);
     cout << "Final Score - P1: " << p1.score << ", P2: " << p2.score << "\n";
     cout << "P2 is WIN!"
          << "\n";

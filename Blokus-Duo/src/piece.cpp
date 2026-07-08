@@ -320,6 +320,219 @@ const std::unordered_map<std::string, BlockData> block_table = {
 
 };
 
+const std::unordered_map<std::string, std::array<std::vector<Position>, 8>>
+    block_rotation_table = {
+        {"a", {{
+            std::vector<Position>{{0, 0}},
+            std::vector<Position>{{0, 0}},
+            std::vector<Position>{{0, 0}},
+            std::vector<Position>{{0, 0}},
+            std::vector<Position>{{0, 0}},
+            std::vector<Position>{{0, 0}},
+            std::vector<Position>{{0, 0}},
+            std::vector<Position>{{0, 0}}
+        }}},
+        {"b", {{
+            std::vector<Position>{{0, 0}, {0, 1}},
+            std::vector<Position>{{0, 0}, {0, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}},
+            std::vector<Position>{{0, 0}, {1, 0}},
+            std::vector<Position>{{0, -1}, {0, 0}},
+            std::vector<Position>{{0, -1}, {0, 0}},
+            std::vector<Position>{{0, 0}, {1, 0}},
+            std::vector<Position>{{-1, 0}, {0, 0}}
+        }}},
+        {"c", {{
+            std::vector<Position>{{0, -1}, {0, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {0, 0}, {0, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}},
+            std::vector<Position>{{0, -1}, {0, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {0, 0}, {0, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}}
+        }}},
+        {"d", {{
+            std::vector<Position>{{0, -1}, {0, 0}, {1, 0}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}},
+            std::vector<Position>{{0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {0, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {0, 1}},
+            std::vector<Position>{{0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}},
+            std::vector<Position>{{0, -1}, {0, 0}, {1, 0}}
+        }}},
+        {"e", {{
+            std::vector<Position>{{0, -1}, {0, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{0, -1}, {0, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{-2, 0}, {-1, 0}, {0, 0}, {1, 0}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}, {2, 0}},
+            std::vector<Position>{{0, -2}, {0, -1}, {0, 0}, {0, 1}},
+            std::vector<Position>{{0, -2}, {0, -1}, {0, 0}, {0, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}, {2, 0}},
+            std::vector<Position>{{-2, 0}, {-1, 0}, {0, 0}, {1, 0}}
+        }}},
+        {"f", {{
+            std::vector<Position>{{0, -1}, {0, 0}, {-1, 1}, {0, 1}},
+            std::vector<Position>{{0, -1}, {0, 0}, {0, 1}, {1, 1}},
+            std::vector<Position>{{-1, -1}, {-1, 0}, {0, 0}, {1, 0}},
+            std::vector<Position>{{1, -1}, {-1, 0}, {0, 0}, {1, 0}},
+            std::vector<Position>{{0, -1}, {1, -1}, {0, 0}, {0, 1}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {0, 0}, {0, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}, {1, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}, {-1, 1}}
+        }}},
+        {"g", {{
+            std::vector<Position>{{0, -1}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {0, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {1, 0}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {1, 0}}
+        }}},
+        {"h", {{
+            std::vector<Position>{{0, 0}, {1, 0}, {0, 1}, {1, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {-1, 1}, {0, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {-1, 1}, {0, 1}},
+            std::vector<Position>{{0, 0}, {1, 0}, {0, 1}, {1, 1}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {-1, 0}, {0, 0}},
+            std::vector<Position>{{0, -1}, {1, -1}, {0, 0}, {1, 0}},
+            std::vector<Position>{{0, -1}, {1, -1}, {0, 0}, {1, 0}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {-1, 0}, {0, 0}}
+        }}},
+        {"i", {{
+            std::vector<Position>{{-1, 0}, {0, 0}, {0, 1}, {1, 1}},
+            std::vector<Position>{{0, 0}, {1, 0}, {-1, 1}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {-1, 1}},
+            std::vector<Position>{{0, -1}, {0, 0}, {1, 0}, {1, 1}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {0, 0}, {1, 0}},
+            std::vector<Position>{{0, -1}, {1, -1}, {-1, 0}, {0, 0}},
+            std::vector<Position>{{1, -1}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{-1, -1}, {-1, 0}, {0, 0}, {0, 1}}
+        }}},
+        {"j", {{
+            std::vector<Position>{{0, -2}, {0, -1}, {0, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{0, -2}, {0, -1}, {0, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{-2, 0}, {-1, 0}, {0, 0}, {1, 0}, {2, 0}},
+            std::vector<Position>{{-2, 0}, {-1, 0}, {0, 0}, {1, 0}, {2, 0}},
+            std::vector<Position>{{0, -2}, {0, -1}, {0, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{0, -2}, {0, -1}, {0, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{-2, 0}, {-1, 0}, {0, 0}, {1, 0}, {2, 0}},
+            std::vector<Position>{{-2, 0}, {-1, 0}, {0, 0}, {1, 0}, {2, 0}}
+        }}},
+        {"k", {{
+            std::vector<Position>{{0, -2}, {0, -1}, {0, 0}, {-1, 1}, {0, 1}},
+            std::vector<Position>{{0, -2}, {0, -1}, {0, 0}, {0, 1}, {1, 1}},
+            std::vector<Position>{{-1, -1}, {-1, 0}, {0, 0}, {1, 0}, {2, 0}},
+            std::vector<Position>{{1, -1}, {-2, 0}, {-1, 0}, {0, 0}, {1, 0}},
+            std::vector<Position>{{0, -1}, {1, -1}, {0, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {0, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{-2, 0}, {-1, 0}, {0, 0}, {1, 0}, {1, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}, {2, 0}, {-1, 1}}
+        }}},
+        {"l", {{
+            std::vector<Position>{{0, -2}, {0, -1}, {-1, 0}, {0, 0}, {-1, 1}},
+            std::vector<Position>{{0, -2}, {0, -1}, {0, 0}, {1, 0}, {1, 1}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {0, 0}, {1, 0}, {2, 0}},
+            std::vector<Position>{{0, -1}, {1, -1}, {-2, 0}, {-1, 0}, {0, 0}},
+            std::vector<Position>{{1, -1}, {0, 0}, {1, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{-1, -1}, {-1, 0}, {0, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{-2, 0}, {-1, 0}, {0, 0}, {0, 1}, {1, 1}},
+            std::vector<Position>{{0, 0}, {1, 0}, {2, 0}, {-1, 1}, {0, 1}}
+        }}},
+        {"m", {{
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {-1, 1}, {0, 1}},
+            std::vector<Position>{{0, -1}, {0, 0}, {1, 0}, {0, 1}, {1, 1}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {-1, 0}, {0, 0}, {1, 0}},
+            std::vector<Position>{{0, -1}, {1, -1}, {-1, 0}, {0, 0}, {1, 0}},
+            std::vector<Position>{{0, -1}, {1, -1}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {-1, 0}, {0, 0}, {0, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}, {0, 1}, {1, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}, {-1, 1}, {0, 1}}
+        }}},
+        {"n", {{
+            std::vector<Position>{{-1, -1}, {0, -1}, {0, 0}, {-1, 1}, {0, 1}},
+            std::vector<Position>{{0, -1}, {1, -1}, {0, 0}, {0, 1}, {1, 1}},
+            std::vector<Position>{{-1, -1}, {1, -1}, {-1, 0}, {0, 0}, {1, 0}},
+            std::vector<Position>{{-1, -1}, {1, -1}, {-1, 0}, {0, 0}, {1, 0}},
+            std::vector<Position>{{0, -1}, {1, -1}, {0, 0}, {0, 1}, {1, 1}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {0, 0}, {-1, 1}, {0, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}, {-1, 1}, {1, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}, {-1, 1}, {1, 1}}
+        }}},
+        {"o", {{
+            std::vector<Position>{{0, -1}, {0, 0}, {1, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{-2, 0}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{-1, 0}, {0, 0}, {1, 0}, {2, 0}, {0, 1}},
+            std::vector<Position>{{0, -2}, {0, -1}, {-1, 0}, {0, 0}, {0, 1}},
+            std::vector<Position>{{0, -2}, {0, -1}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {2, 0}},
+            std::vector<Position>{{0, -1}, {-2, 0}, {-1, 0}, {0, 0}, {1, 0}}
+        }}},
+        {"p", {{
+            std::vector<Position>{{0, -1}, {0, 0}, {-1, 1}, {0, 1}, {1, 1}},
+            std::vector<Position>{{0, -1}, {0, 0}, {-1, 1}, {0, 1}, {1, 1}},
+            std::vector<Position>{{-1, -1}, {-1, 0}, {0, 0}, {1, 0}, {-1, 1}},
+            std::vector<Position>{{1, -1}, {-1, 0}, {0, 0}, {1, 0}, {1, 1}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {1, -1}, {0, 0}, {0, 1}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {1, -1}, {0, 0}, {0, 1}},
+            std::vector<Position>{{1, -1}, {-1, 0}, {0, 0}, {1, 0}, {1, 1}},
+            std::vector<Position>{{-1, -1}, {-1, 0}, {0, 0}, {1, 0}, {-1, 1}}
+        }}},
+        {"q", {{
+            std::vector<Position>{{0, -2}, {0, -1}, {0, 0}, {1, 0}, {2, 0}},
+            std::vector<Position>{{0, -2}, {0, -1}, {-2, 0}, {-1, 0}, {0, 0}},
+            std::vector<Position>{{0, 0}, {1, 0}, {2, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{-2, 0}, {-1, 0}, {0, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{-2, 0}, {-1, 0}, {0, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{0, 0}, {1, 0}, {2, 0}, {0, 1}, {0, 2}},
+            std::vector<Position>{{0, -2}, {0, -1}, {-2, 0}, {-1, 0}, {0, 0}},
+            std::vector<Position>{{0, -2}, {0, -1}, {0, 0}, {1, 0}, {2, 0}}
+        }}},
+        {"r", {{
+            std::vector<Position>{{-1, -1}, {0, -1}, {0, 0}, {1, 0}, {1, 1}},
+            std::vector<Position>{{0, -1}, {1, -1}, {-1, 0}, {0, 0}, {-1, 1}},
+            std::vector<Position>{{1, -1}, {0, 0}, {1, 0}, {-1, 1}, {0, 1}},
+            std::vector<Position>{{-1, -1}, {-1, 0}, {0, 0}, {0, 1}, {1, 1}},
+            std::vector<Position>{{-1, -1}, {-1, 0}, {0, 0}, {0, 1}, {1, 1}},
+            std::vector<Position>{{1, -1}, {0, 0}, {1, 0}, {-1, 1}, {0, 1}},
+            std::vector<Position>{{0, -1}, {1, -1}, {-1, 0}, {0, 0}, {-1, 1}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {0, 0}, {1, 0}, {1, 1}}
+        }}},
+        {"s", {{
+            std::vector<Position>{{-1, -1}, {-1, 0}, {0, 0}, {1, 0}, {1, 1}},
+            std::vector<Position>{{1, -1}, {-1, 0}, {0, 0}, {1, 0}, {-1, 1}},
+            std::vector<Position>{{0, -1}, {1, -1}, {0, 0}, {-1, 1}, {0, 1}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {0, 0}, {0, 1}, {1, 1}},
+            std::vector<Position>{{-1, -1}, {-1, 0}, {0, 0}, {1, 0}, {1, 1}},
+            std::vector<Position>{{1, -1}, {-1, 0}, {0, 0}, {1, 0}, {-1, 1}},
+            std::vector<Position>{{0, -1}, {1, -1}, {0, 0}, {-1, 1}, {0, 1}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {0, 0}, {0, 1}, {1, 1}}
+        }}},
+        {"t", {{
+            std::vector<Position>{{-1, -1}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{1, -1}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {1, -1}, {-1, 0}, {0, 0}, {0, 1}},
+            std::vector<Position>{{-1, -1}, {0, -1}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {1, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {-1, 1}},
+            std::vector<Position>{{0, -1}, {0, 0}, {1, 0}, {-1, 1}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {0, 1}, {1, 1}}
+        }}},
+        {"u", {{
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+            std::vector<Position>{{0, -1}, {-1, 0}, {0, 0}, {1, 0}, {0, 1}}
+        }}},
+};
 std::vector<std::string> BLOCK_IDS_BY_SIZE;
 
 void init_block_ids_by_size() {
@@ -347,7 +560,10 @@ Block::Block(const BlockData &data) {
       for (int j = 0; j < 7; ++j)
         influence[i][j] = data.influence[i][j];
 
-    rebuild_occupied_offsets();
+    rotations = data.rotations;
+    cells = rotations[0];
+    if (cells.empty())
+      rebuild_occupied_offsets();
   }
 
 vector<vector<int>> Block::transpose(const vector<vector<int>> &mat) {
@@ -391,7 +607,8 @@ const vector<Position> &Block::occupied_offsets() const {
 }
 
 void Block::rotate_block(int dir) {
-    switch (dir) {
+    int normalized_dir = ((dir % 8) + 8) % 8;
+    switch (normalized_dir) {
     case 0: // 初期向き
       break;
 
@@ -430,7 +647,10 @@ void Block::rotate_block(int dir) {
       influence = rot90(transpose(influence), 2);
       break;
     }
-    rebuild_occupied_offsets();
+    if (!rotations[normalized_dir].empty())
+      cells = rotations[normalized_dir];
+    else
+      rebuild_occupied_offsets();
   }
 
 BlockData getBlock(const std::string &id) {
@@ -438,5 +658,9 @@ BlockData getBlock(const std::string &id) {
   if (it == block_table.end()) {
     throw std::runtime_error("Error: block id '" + id + "' not found!");
   }
-  return it->second;
+  BlockData data = it->second;
+  auto rot_it = block_rotation_table.find(id);
+  if (rot_it != block_rotation_table.end())
+    data.rotations = rot_it->second;
+  return data;
 }
