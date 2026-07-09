@@ -608,45 +608,6 @@ const vector<Position> &Block::occupied_offsets() const {
 
 void Block::rotate_block(int dir) {
     int normalized_dir = ((dir % 8) + 8) % 8;
-    switch (normalized_dir) {
-    case 0: // 初期向き
-      break;
-
-    case 1:                               // 裏向き
-      shape = rot90(transpose(shape), 1); // Pythonでは -1
-      influence = rot90(transpose(influence), 1);
-      break;
-
-    case 2: // 初期向きから90°時計回り
-      shape = rot90(shape, 1);
-      influence = rot90(influence, 1);
-      break;
-
-    case 3: // 裏向きから90°反時計回り
-      shape = transpose(shape);
-      influence = transpose(influence);
-      break;
-
-    case 4: // 初期向きから180°時計回り
-      shape = rot90(shape, 2);
-      influence = rot90(influence, 2);
-      break;
-
-    case 5: // 裏向きから180°反時計回り
-      shape = rot90(transpose(shape), 3);
-      influence = rot90(transpose(influence), 3);
-      break;
-
-    case 6: // 初期向きから270°時計回り
-      shape = rot90(shape, 3);
-      influence = rot90(influence, 3);
-      break;
-
-    case 7: // 裏向きから270°反時計回り
-      shape = rot90(transpose(shape), 2);
-      influence = rot90(transpose(influence), 2);
-      break;
-    }
     if (!rotations[normalized_dir].empty())
       cells = rotations[normalized_dir];
     else

@@ -53,9 +53,6 @@ int main() {
   auto start_time = std::chrono::steady_clock::now();
 
   for (int i = 0; i < N; i++) {
-    cout << "===== " << Aitype_to_string(p1_ai) << " vs "
-         << Aitype_to_string(p2_ai) << " Game " << i + 1 << " =====" << endl;
-
     Board board(TILE_NUMBER, input_board);
     Player p1{Color::PLAYER1, {""}};
     Player p2{Color::PLAYER2, {""}};
@@ -78,9 +75,6 @@ int main() {
   }
 
   for (int i = 0; i < N; i++) {
-    cout << "===== " << Aitype_to_string(p2_ai) << " vs "
-         << Aitype_to_string(p1_ai) << " Game " << i + 1 << " =====" << endl;
-
     Board board(TILE_NUMBER, input_board);
     Player p1{Color::PLAYER1, {""}};
     Player p2{Color::PLAYER2, {""}};
@@ -101,15 +95,18 @@ int main() {
     if (result == GameResult::P2_WIN)
       win_p1_ai[1]++;
   }
-  cout << Aitype_to_string(p1_ai) << " vs " << Aitype_to_string(p2_ai)
-       << " results: " << win_p1_ai[0] << " - " << win_p2_ai[0] << endl;
-  cout << Aitype_to_string(p2_ai) << " vs " << Aitype_to_string(p1_ai)
-       << " results: " << win_p2_ai[1] << " - " << win_p1_ai[1] << endl;
-
   auto end_time = std::chrono::steady_clock::now();
   std::chrono::duration<double> elapsed = end_time - start_time;
 
   cout << "=====  Results =====" << endl;
+  cout << Aitype_to_string(p1_ai) << " first: " << win_p1_ai[0] << " - "
+       << win_p2_ai[0] << endl;
+  cout << Aitype_to_string(p2_ai) << " first: " << win_p2_ai[1] << " - "
+       << win_p1_ai[1] << endl;
+  cout << "total wins " << Aitype_to_string(p1_ai) << " = "
+       << win_p1_ai[0] + win_p1_ai[1] << endl;
+  cout << "total wins " << Aitype_to_string(p2_ai) << " = "
+       << win_p2_ai[0] + win_p2_ai[1] << endl;
   cout << Aitype_to_string(p1_ai)
        << " win rate = " << (double)(win_p1_ai[0] + win_p1_ai[1]) / (N * 2)
        << endl;

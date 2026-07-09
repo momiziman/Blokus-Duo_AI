@@ -176,9 +176,9 @@ vector<pair<int, int>> Board::search_settable_position_one_ableset(
   uint8_t cant_bit = (col == 0) ? P1_CANT_BIT : P2_CANT_BIT;
 
   if (!(bit_status[ay][ax] & able_bit)) {
-    cout << "Error:It's not ABLESET! (by search settable position one "
-            "ableset())"
-         << endl;
+    // cout << "Error:It's not ABLESET! (by search settable position one "
+    //         "ableset())"
+    //      << endl;
     return res;
   }
 
@@ -224,7 +224,7 @@ Board::select_random_settable_position(Color color) {
   }
 
   if (candidates.empty()) {
-    cout << "No one ABLESET." << endl;
+    // cout << "No one ABLESET." << endl;
     return std::nullopt;
   }
 
@@ -254,21 +254,32 @@ void Board::change_status(Color color, Block &block, const std::string &block_id
       set_cell_state(col, yy, xx, MYBLOCK);
   }
 
-  int I = block.influence.size();
-  for (int r = 0; r < I; r++) {
-    for (int c = 0; c < I; c++) {
-      int yy = y + r - 3;
-      int xx = x + c - 3;
+  static const int side_dirs[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+  static const int edge_dirs[4][2] = {{-1, -1}, {1, -1}, {-1, 1}, {1, 1}};
+
+  for (const auto &offset : occupied) {
+    int base_y = y + offset.y;
+    int base_x = x + offset.x;
+    for (const auto &dir : side_dirs) {
+      int yy = base_y + dir[1];
+      int xx = base_x + dir[0];
       if (!in_bounds(yy, xx))
         continue;
-
       if (status[col][yy][xx] == MYBLOCK || status[col][yy][xx] == OPBLOCK)
         continue;
+      set_cell_state(col, yy, xx, CANTSET);
+    }
+  }
 
-      if (block.influence[r][c] == CANTSET)
-        set_cell_state(col, yy, xx, CANTSET);
-      else if (block.influence[r][c] == ABLESET &&
-               status[col][yy][xx] == BLANK)
+  for (const auto &offset : occupied) {
+    int base_y = y + offset.y;
+    int base_x = x + offset.x;
+    for (const auto &dir : edge_dirs) {
+      int yy = base_y + dir[1];
+      int xx = base_x + dir[0];
+      if (!in_bounds(yy, xx))
+        continue;
+      if (status[col][yy][xx] == BLANK)
         set_cell_state(col, yy, xx, ABLESET);
     }
   }

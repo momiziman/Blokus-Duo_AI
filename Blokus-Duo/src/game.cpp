@@ -657,10 +657,10 @@ struct MCTSNode {
 
         board.change_status(turn, blk, move.block_id, move.rotation, move.x,
                             move.y, *cur);
-        cout << "Step " << step + 1 << ": "
-             << ((turn == Color::PLAYER1) ? "P1" : "P2") << " plays block "
-             << move.block_id << " at (" << move.x << "," << move.y
-             << ") rot=" << move.rotation << "\n";
+        // cout << "Step " << step + 1 << ": "
+        //      << ((turn == Color::PLAYER1) ? "P1" : "P2") << " plays block "
+        //      << move.block_id << " at (" << move.x << "," << move.y
+        //      << ") rot=" << move.rotation << "\n";
         // board.print_status(turn);
       }
 
@@ -669,19 +669,19 @@ struct MCTSNode {
 
     if (start_turn == Color::PLAYER1) {
       if (p1.score > p2.score)
-        cout << "P1 wins\n";
+        // cout << "P1 wins\n";
       return 1.0;
       if (p1.score < p2.score) {
-        cout << "P2 wins\n";
+        // cout << "P2 wins\n";
         return 0.0;
       }
       return 0.5; // 引き分け
     } else {
       if (p2.score > p1.score)
-        cout << "P2 wins\n";
+        // cout << "P2 wins\n";
       return 1.0;
       if (p2.score < p1.score) {
-        cout << "P1 wins\n";
+        // cout << "P1 wins\n";
         return 0.0;
       }
       return 0.5; // 引き分け
@@ -831,7 +831,7 @@ Move MCTS(Board root_board, Player root_p1, Player root_p2, Color root_turn,
         pack_moves(get_all_legal_moves(root_board, Color::PLAYER2, root_p2));
 
   if (root->untried_moves.empty()) {
-    std::cout << "[MCTS] No moves available.\n";
+    // std::cout << "[MCTS] No moves available.\n";
     return Move();
   }
 
@@ -851,8 +851,8 @@ Move MCTS(Board root_board, Player root_p1, Player root_p2, Color root_turn,
     break;
   }
 
-  std::cout << "[MCTS] Root legal moves = " << root->children.size()
-            << std::endl;
+  // std::cout << "[MCTS] Root legal moves = " << root->children.size()
+  //           << std::endl;
 
   std::random_device rd;
   std::mt19937 gen(rd());
@@ -896,11 +896,11 @@ Move MCTS(Board root_board, Player root_p1, Player root_p2, Color root_turn,
     node->backpropagate(result, root_turn);
   }
 
-  print_tree_recursive(root,
+  /*print_tree_recursive(root,
                        1, // depth（Root直下を1とする）
                        5, // 最大深さ
                        1  // 各階層で上位1ノードのみ表示
-  );
+  );*/
 
   // ============================
   // 最良手を選択
@@ -917,14 +917,14 @@ Move MCTS(Board root_board, Player root_p1, Player root_p2, Color root_turn,
   }
 
   if (best_child == nullptr) {
-    std::cout << "[MCTS] ERROR: no best child.\n";
+    // std::cout << "[MCTS] ERROR: no best child.\n";
     return Move();
   }
 
   Move best_move = best_child->move();
 
-  cout << "[MCTS] Best move: " << best_move.block_id << " (" << best_move.x
-       << "," << best_move.y << ") rot=" << best_move.rotation << "\n";
+  // cout << "[MCTS] Best move: " << best_move.block_id << " (" << best_move.x
+  //      << "," << best_move.y << ") rot=" << best_move.rotation << "\n";
   // 最良手を返す
 
   // ツリー解放
@@ -979,13 +979,13 @@ GameResult play_game(Board board, Player p1, Player p2, Color start_turn,
         board.change_status(turn, blk, move.block_id, move.rotation, move.x,
                             move.y, *current);
         if (turn == Color::PLAYER1) {
-          cout << "Turn" << p1.turn_num << "- PLAYER1 placed block "
-               << move.block_id << " at (" << move.x << "," << move.y
-               << ") with rotation " << move.rotation << "\n";
+          // cout << "Turn" << p1.turn_num << "- PLAYER1 placed block "
+          //      << move.block_id << " at (" << move.x << "," << move.y
+          //      << ") with rotation " << move.rotation << "\n";
         } else {
-          cout << "Turn" << p2.turn_num << "- PLAYER2 placed block "
-               << move.block_id << " at (" << move.x << "," << move.y
-               << ") with rotation " << move.rotation << "\n";
+          // cout << "Turn" << p2.turn_num << "- PLAYER2 placed block "
+          //      << move.block_id << " at (" << move.x << "," << move.y
+          //      << ") with rotation " << move.rotation << "\n";
         }
         // board.print_status(turn);
       }
@@ -995,17 +995,17 @@ GameResult play_game(Board board, Player p1, Player p2, Color start_turn,
   }
 
   if (p1.score > p2.score) {
-    // board.print_status(Color::PLAYER1);
-    cout << "Final Score - P1: " << p1.score << ", P2: " << p2.score << "\n";
-    cout << "P1 is WIN!"
-         << "\n";
+    board.print_status(Color::PLAYER1);
+    // cout << "Final Score - P1: " << p1.score << ", P2: " << p2.score << "\n";
+    // cout << "P1 is WIN!"
+    //      << "\n";
     return GameResult::P1_WIN;
   }
   if (p2.score > p1.score) {
-    // board.print_status(Color::PLAYER2);
-    cout << "Final Score - P1: " << p1.score << ", P2: " << p2.score << "\n";
-    cout << "P2 is WIN!"
-         << "\n";
+    board.print_status(Color::PLAYER2);
+    // cout << "Final Score - P1: " << p1.score << ", P2: " << p2.score << "\n";
+    // cout << "P2 is WIN!"
+    //      << "\n";
     return GameResult::P2_WIN;
   }
   return GameResult::DRAW;
