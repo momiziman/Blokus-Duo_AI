@@ -1,13 +1,20 @@
 #include "../include/board.hpp"
 
 Board::Board(int tile_number, const vector<vector<vector<int>>> &input_board)
-    : TILE_NUMBER(tile_number), status(input_board),
-      bit_status(tile_number + 2, vector<uint8_t>(tile_number + 2, 0)) {
+    : TILE_NUMBER(tile_number) {
+  for (int col = 0; col < COLOR_NUM; ++col) {
+    for (int y = 0; y < BOARD_SIZE; ++y) {
+      for (int x = 0; x < BOARD_SIZE; ++x) {
+        status[col][y][x] = input_board[col][y][x];
+      }
+    }
+  }
   rebuild_bit_status();
 }
 
 void Board::rebuild_bit_status() {
-  bit_status.assign(TILE_NUMBER + 2, vector<uint8_t>(TILE_NUMBER + 2, 0));
+  for (auto &row : bit_status)
+    row.fill(0);
 
   for (int col = 0; col < COLOR_NUM; ++col) {
     uint8_t block_bit = (col == 0) ? P1_BLOCK_BIT : P2_BLOCK_BIT;
@@ -295,6 +302,7 @@ void Board::change_status(Color color, Block &block, const std::string &block_id
   }
 
   player.used_blocks.push_back(block_id);
+  mark_block_used(player, block_id);
   player.turn_num++;
 
   auto it = block_table.find(block_id);

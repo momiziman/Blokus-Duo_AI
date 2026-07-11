@@ -908,4 +908,43 @@ result=PASS pass_count=2
 
 ===== Single Game Debug Result =====
 final score P1=55 P2=49
+final turns P1=14 P2=13
+final used blocks P1=14 P2=13
+final used mask P1=0x1a597f P2=0x135ff
 winner=PLAYER1
+
+final board view for PLAYER1:
+# # # # # # # # # # # # # # # # 
+# M # * O O M # M M M M # . . # 
+# M M # O O M M # M # # O . . # 
+# M # M # M O M O # M M O . . # 
+# # # M # M O O O * # M O . . # 
+# * # # M M # # * O O M # O O # 
+# # M # M # M M # . O O * O . # 
+# # M # # # M M # # # * O . O # 
+# # M # M M # M # M M O O . O # 
+# * # M M # M O M M # O O . O # 
+# # M # M # # O M O O . . . O # 
+# M M # # M # * O * O . . O . # 
+# # # # M M M O . . O . . O . # 
+# . O * # M O O O # * O O O . # 
+# . O O O O M M M M # . . . . # 
+# # # # # # # # # # # # # # # # 
+
+final board view for PLAYER2:
+# # # # # # # # # # # # # # # # 
+# O . # M M O . O O O O # * . # 
+# O O # M M O O # O . # M # . # 
+# O . O # O M O M # O O M # . # 
+# . . O . O M M M # # O M # # # 
+# . . . O O # # # M M O # M M # 
+# . O . O . O O * # M M # M # # 
+# . O . . . O O . * # # M # M # 
+# . O . O O * O * O O M M # M # 
+# . . O O . O M O O # M M # M # 
+# . O . O . # M O M M # # # M # 
+# O O . . O * # M # M # # M # # 
+# * # * O O O M # # M # # M # # 
+# # M # # O M M M # # M M M # # 
+# # M M M M O O O O * # # # * # 
+# # # # # # # # # # # # # # # # 

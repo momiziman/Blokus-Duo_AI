@@ -19,8 +19,9 @@ public:
   inline static const uint8_t P2_ABLE_BIT = 1 << 5;
 
   int TILE_NUMBER;
-  vector<vector<vector<int>>> status;
-  vector<vector<uint8_t>> bit_status;
+  std::array<std::array<std::array<int, BOARD_SIZE>, BOARD_SIZE>, COLOR_NUM>
+      status{};
+  std::array<std::array<uint8_t, BOARD_SIZE>, BOARD_SIZE> bit_status{};
 
   Board(int tile_number, const vector<vector<vector<int>>> &input_board);
 

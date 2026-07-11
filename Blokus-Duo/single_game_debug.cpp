@@ -210,12 +210,21 @@ int main() {
 
   log << "===== Single Game Debug Result =====\n";
   log << "final score P1=" << p1.score << " P2=" << p2.score << '\n';
+  log << "final turns P1=" << p1.turn_num << " P2=" << p2.turn_num << '\n';
+  log << "final used blocks P1=" << p1.used_blocks.size() - 1
+      << " P2=" << p2.used_blocks.size() - 1 << '\n';
+  log << "final used mask P1=0x" << std::hex << p1.used_mask
+      << " P2=0x" << p2.used_mask << std::dec << '\n';
   if (p1.score > p2.score)
     log << "winner=PLAYER1\n";
   else if (p2.score > p1.score)
     log << "winner=PLAYER2\n";
   else
     log << "winner=DRAW\n";
+  log << "\nfinal board view for PLAYER1:\n";
+  print_board(log, board, Color::PLAYER1);
+  log << "\nfinal board view for PLAYER2:\n";
+  print_board(log, board, Color::PLAYER2);
 
   std::cout << "single_game_debug_log.txt was created.\n";
   return 0;

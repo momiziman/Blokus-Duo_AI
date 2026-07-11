@@ -27,8 +27,7 @@ vector<Move> get_all_legal_moves(Board &board, Color player_color,
   // 使用済みブロックを除いた未使用ブロックリストを作成
   vector<string> unused_blocks;
   for (auto &[id, _] : block_table) {
-    if (find(player.used_blocks.begin(), player.used_blocks.end(), id) ==
-        player.used_blocks.end()) {
+    if (!is_block_used(player, id)) {
       unused_blocks.push_back(id);
     }
   }
@@ -63,8 +62,7 @@ vector<Move> get_fast_legal_moves(Board &board, Color color, Player &player,
   // --- 未使用ブロック列挙 ---
   vector<string> unused_blocks;
   for (auto &[id, _] : block_table) {
-    if (find(player.used_blocks.begin(), player.used_blocks.end(), id) ==
-        player.used_blocks.end()) {
+    if (!is_block_used(player, id)) {
       unused_blocks.push_back(id);
     }
   }
@@ -114,8 +112,7 @@ vector<Move> get_one_legal_moves(Board &board, Color color, Player &player,
   // --- 未使用ブロック列挙 ---
   vector<string> unused_blocks;
   for (auto &[id, _] : block_table) {
-    if (find(player.used_blocks.begin(), player.used_blocks.end(), id) ==
-        player.used_blocks.end()) {
+    if (!is_block_used(player, id)) {
       unused_blocks.push_back(id);
     }
   }
@@ -166,8 +163,7 @@ vector<Move> get_oneable_legal_moves(Board &board, Color color,
   // --- 未使用ブロック列挙 ---
   vector<string> unused_blocks;
   for (auto &[id, _] : block_table) {
-    if (find(player.used_blocks.begin(), player.used_blocks.end(), id) ==
-        player.used_blocks.end()) {
+    if (!is_block_used(player, id)) {
       unused_blocks.push_back(id);
     }
   }
@@ -215,8 +211,7 @@ get_legal_moves_no_pos(Board &board, Color player_color, Player &player) {
 
   for (auto &[id, _] : block_table) {
     // 使用済みブロックはスキップ
-    if (find(player.used_blocks.begin(), player.used_blocks.end(), id) !=
-        player.used_blocks.end())
+    if (is_block_used(player, id))
       continue;
 
     BlockData data = getBlock(id);
@@ -244,8 +239,7 @@ vector<string> get_legal_block_types(Board &board, Color player_color,
 
   for (auto &[id, _] : block_table) {
     // 使用済みブロックはスキップ
-    if (find(player.used_blocks.begin(), player.used_blocks.end(), id) !=
-        player.used_blocks.end())
+    if (is_block_used(player, id))
       continue;
 
     BlockData data = getBlock(id);
@@ -566,8 +560,9 @@ struct MCTSNode {
     int idx = dis(gen);
     Move move = Move::from_packed(untried_moves[idx]);
 
-    // 選んだ手を未展開リストから削除
-    untried_moves.erase(untried_moves.begin() + idx);
+    // Remove without preserving order.
+    untried_moves[idx] = untried_moves.back();
+    untried_moves.pop_back();
 
     // 次ノード用の盤面/プレイヤー状態をコピー
     Board next_board = board;
@@ -935,7 +930,7 @@ Move MCTS(Board root_board, Player root_p1, Player root_p2, Color root_turn,
 
 GameResult play_game(Board board, Player p1, Player p2, Color start_turn,
                      AIType p1_ai, AIType p2_ai, int mcts_iterations,
-                     int max_tree_depth) {
+                     int max_tree_depth, GameStats *stats) {
 
   Color turn = start_turn;
   int pass_count = 0;
@@ -992,6 +987,13 @@ GameResult play_game(Board board, Player p1, Player p2, Color start_turn,
     }
 
     turn = (turn == Color::PLAYER1) ? Color::PLAYER2 : Color::PLAYER1;
+  }
+
+  if (stats) {
+    stats->p1_score = p1.score;
+    stats->p2_score = p2.score;
+    stats->p1_turns = p1.turn_num;
+    stats->p2_turns = p2.turn_num;
   }
 
   if (p1.score > p2.score) {
