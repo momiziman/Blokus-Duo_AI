@@ -6,7 +6,12 @@ random seed=20260627
 turn=PLAYER1 ai=RAND phase=OPENING
 score before P1=0 P2=0
 used blocks count=0
+board stats before PLAYER1 status(blank/cant/able/my/op)=195/60/1/0/0 bit(my/op/cant/able)=0/0/60/1 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=195/60/1/0/0 bit(my/op/cant/able)=0/0/60/1 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=712
+legal moves by block: a=8 b=16 c=24 d=24 e=32 f=32 g=32 h=32 i=32 j=40 k=40 l=40 m=40 n=40 o=40 p=40 q=40 r=40 s=40 t=40 u=40
+unused blocks legal counts: t=40 s=40 r=40 q=40 o=40 a=8 b=16 u=40 p=40 h=32 n=40 d=24 k=40 c=24 i=32 f=32 g=32 e=32 j=40 l=40 m=40
   candidate[0] move block=t x=5 y=4 rotation=0 packed=0x9854
   candidate[1] move block=t x=4 y=5 rotation=0 packed=0x9845
   candidate[2] move block=t x=5 y=5 rotation=0 packed=0x9855
@@ -17,6 +22,9 @@ selected move block=l x=5 y=5 rotation=0 packed=0x5855
 roundtrip move block=l x=5 y=5 rotation=0 packed=0x5855
 score after P1=5 P2=0
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=175/70/6/5/0 bit(my/op/cant/able)=5/0/70/6 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=190/60/1/0/5 bit(my/op/cant/able)=0/5/60/1 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # . . . . . . . . . . . . . . # 
@@ -39,7 +47,12 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=OPENING
 score before P1=5 P2=0
 used blocks count=0
+board stats before PLAYER1 status(blank/cant/able/my/op)=175/70/6/5/0 bit(my/op/cant/able)=5/0/70/6 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=190/60/1/0/5 bit(my/op/cant/able)=0/5/60/1 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=712
+legal moves by block: a=8 b=16 c=24 d=24 e=32 f=32 g=32 h=32 i=32 j=40 k=40 l=40 m=40 n=40 o=40 p=40 q=40 r=40 s=40 t=40 u=40
+unused blocks legal counts: t=40 s=40 r=40 q=40 o=40 a=8 b=16 u=40 p=40 h=32 n=40 d=24 k=40 c=24 i=32 f=32 g=32 e=32 j=40 l=40 m=40
   candidate[0] move block=t x=10 y=9 rotation=0 packed=0x98a9
   candidate[1] move block=t x=9 y=10 rotation=0 packed=0x989a
   candidate[2] move block=t x=10 y=10 rotation=0 packed=0x98aa
@@ -50,6 +63,9 @@ selected move block=f x=10 y=11 rotation=5 packed=0x2dab
 roundtrip move block=f x=10 y=11 rotation=5 packed=0x2dab
 score after P1=5 P2=4
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=171/70/6/5/4 bit(my/op/cant/able)=5/4/70/6 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=173/69/5/4/5 bit(my/op/cant/able)=4/5/69/5 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER2:
 # # # # # # # # # # # # # # # # 
 # . . . . . . . . . . . . . . # 
@@ -72,7 +88,12 @@ board view for PLAYER2:
 turn=PLAYER1 ai=RAND phase=OPENING
 score before P1=5 P2=4
 used blocks count=1
+board stats before PLAYER1 status(blank/cant/able/my/op)=171/70/6/5/4 bit(my/op/cant/able)=5/4/70/6 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=173/69/5/4/5 bit(my/op/cant/able)=4/5/69/5 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=948
+legal moves by block: a=48 b=48 c=40 d=56 e=32 f=48 g=56 h=48 i=56 j=24 k=40 m=48 n=44 o=46 p=48 q=42 r=56 s=48 t=56 u=64
+unused blocks legal counts: t=56 s=48 r=56 q=42 o=46 a=48 b=48 u=64 p=48 h=48 n=44 d=56 k=40 c=40 i=56 f=48 g=56 e=32 j=24 m=48
   candidate[0] move block=t x=3 y=2 rotation=0 packed=0x9832
   candidate[1] move block=t x=7 y=2 rotation=0 packed=0x9872
   candidate[2] move block=t x=2 y=4 rotation=0 packed=0x9824
@@ -83,6 +104,9 @@ selected move block=i x=7 y=2 rotation=7 packed=0x4772
 roundtrip move block=i x=7 y=2 rotation=7 packed=0x4772
 score after P1=9 P2=4
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=161/75/7/9/4 bit(my/op/cant/able)=9/4/75/7 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=169/69/5/4/9 bit(my/op/cant/able)=4/9/69/5 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # . . . . # M # * . . . . . . # 
@@ -105,7 +129,12 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=OPENING
 score before P1=9 P2=4
 used blocks count=1
+board stats before PLAYER1 status(blank/cant/able/my/op)=161/75/7/9/4 bit(my/op/cant/able)=9/4/75/7 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=169/69/5/4/9 bit(my/op/cant/able)=4/9/69/5 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=820
+legal moves by block: a=40 b=40 c=32 d=48 e=32 g=48 h=40 i=48 j=20 k=40 l=46 m=40 n=36 o=46 p=40 q=32 r=48 s=40 t=48 u=56
+unused blocks legal counts: t=48 s=40 r=48 q=32 o=46 a=40 b=40 u=56 p=40 h=40 n=36 d=48 k=40 c=32 i=48 g=48 e=32 j=20 l=46 m=40
   candidate[0] move block=t x=8 y=8 rotation=0 packed=0x9888
   candidate[1] move block=t x=11 y=8 rotation=0 packed=0x98b8
   candidate[2] move block=t x=7 y=9 rotation=0 packed=0x9879
@@ -116,6 +145,9 @@ selected move block=q x=13 y=13 rotation=1 packed=0x81dd
 roundtrip move block=q x=13 y=13 rotation=1 packed=0x81dd
 score after P1=9 P2=9
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=156/75/7/9/9 bit(my/op/cant/able)=9/9/75/7 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=152/78/8/9/9 bit(my/op/cant/able)=9/9/78/8 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER2:
 # # # # # # # # # # # # # # # # 
 # . . . . . O . . . . . . . . # 
@@ -138,7 +170,12 @@ board view for PLAYER2:
 turn=PLAYER1 ai=RAND phase=OPENING
 score before P1=9 P2=9
 used blocks count=2
+board stats before PLAYER1 status(blank/cant/able/my/op)=156/75/7/9/9 bit(my/op/cant/able)=9/9/75/7 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=152/78/8/9/9 bit(my/op/cant/able)=9/9/78/8 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=988
+legal moves by block: a=56 b=52 c=48 d=56 e=40 f=51 g=60 h=48 j=32 k=43 m=52 n=46 o=49 p=54 q=50 r=62 s=54 t=63 u=72
+unused blocks legal counts: t=63 s=54 r=62 q=50 o=49 a=56 b=52 u=72 p=54 h=48 n=46 d=56 k=43 c=48 f=51 g=60 e=40 j=32 m=52
   candidate[0] move block=t x=3 y=2 rotation=0 packed=0x9832
   candidate[1] move block=t x=2 y=4 rotation=0 packed=0x9824
   candidate[2] move block=t x=9 y=5 rotation=0 packed=0x9895
@@ -149,6 +186,9 @@ selected move block=m x=7 y=7 rotation=5 packed=0x6577
 roundtrip move block=m x=7 y=7 rotation=5 packed=0x6577
 score after P1=14 P2=9
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=142/82/9/14/9 bit(my/op/cant/able)=14/9/82/9 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=147/78/8/9/14 bit(my/op/cant/able)=9/14/78/8 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # . . . . # M # * . . . . . . # 
@@ -171,7 +211,12 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=OPENING
 score before P1=14 P2=9
 used blocks count=2
+board stats before PLAYER1 status(blank/cant/able/my/op)=142/82/9/14/9 bit(my/op/cant/able)=14/9/82/9 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=147/78/8/9/14 bit(my/op/cant/able)=9/14/78/8 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=681
+legal moves by block: a=64 b=44 c=40 d=38 e=40 g=36 h=24 i=38 j=32 k=32 l=38 m=27 n=26 o=35 p=32 r=38 s=32 t=33 u=32
+unused blocks legal counts: t=33 s=32 r=38 o=35 a=64 b=44 u=32 p=32 h=24 n=26 d=38 k=32 c=40 i=38 g=36 e=40 j=32 l=38 m=27
   candidate[0] move block=t x=11 y=8 rotation=0 packed=0x98b8
   candidate[1] move block=t x=7 y=9 rotation=0 packed=0x9879
   candidate[2] move block=t x=12 y=9 rotation=0 packed=0x98c9
@@ -182,6 +227,9 @@ selected move block=a x=8 y=11 rotation=3 packed=0x038b
 roundtrip move block=a x=8 y=11 rotation=3 packed=0x038b
 score after P1=14 P2=10
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=141/82/9/14/10 bit(my/op/cant/able)=14/10/82/9 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=143/80/9/10/14 bit(my/op/cant/able)=10/14/80/9 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER2:
 # # # # # # # # # # # # # # # # 
 # . . . . . O . . . . . . . . # 
@@ -204,7 +252,12 @@ board view for PLAYER2:
 turn=PLAYER1 ai=RAND phase=OPENING
 score before P1=14 P2=10
 used blocks count=3
+board stats before PLAYER1 status(blank/cant/able/my/op)=141/82/9/14/10 bit(my/op/cant/able)=14/10/82/9 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=143/80/9/10/14 bit(my/op/cant/able)=10/14/80/9 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=979
+legal moves by block: a=72 b=64 c=52 d=62 e=44 f=55 g=58 h=48 j=36 k=47 n=42 o=49 p=56 q=46 r=64 s=58 t=62 u=64
+unused blocks legal counts: t=62 s=58 r=64 q=46 o=49 a=72 b=64 u=64 p=56 h=48 n=42 d=62 k=47 c=52 f=55 g=58 e=44 j=36
   candidate[0] move block=t x=3 y=2 rotation=0 packed=0x9832
   candidate[1] move block=t x=2 y=4 rotation=0 packed=0x9824
   candidate[2] move block=t x=9 y=5 rotation=0 packed=0x9895
@@ -215,6 +268,9 @@ selected move block=b x=3 y=4 rotation=5 packed=0x0d34
 roundtrip move block=b x=3 y=4 rotation=5 packed=0x0d34
 score after P1=16 P2=10
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=135/85/10/16/10 bit(my/op/cant/able)=16/10/85/10 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=141/80/9/10/16 bit(my/op/cant/able)=10/16/80/9 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # . . . . # M # * . . . . . . # 
@@ -237,7 +293,12 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=OPENING
 score before P1=16 P2=10
 used blocks count=3
+board stats before PLAYER1 status(blank/cant/able/my/op)=135/85/10/16/10 bit(my/op/cant/able)=16/10/85/10 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=141/80/9/10/16 bit(my/op/cant/able)=10/16/80/9 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=711
+legal moves by block: b=52 c=44 d=46 e=40 g=42 h=32 i=46 j=36 k=33 l=39 m=33 n=30 o=38 p=36 r=46 s=38 t=40 u=40
+unused blocks legal counts: t=40 s=38 r=46 o=38 b=52 u=40 p=36 h=32 n=30 d=46 k=33 c=44 i=46 g=42 e=40 j=36 l=39 m=33
   candidate[0] move block=t x=11 y=8 rotation=0 packed=0x98b8
   candidate[1] move block=t x=7 y=9 rotation=0 packed=0x9879
   candidate[2] move block=t x=12 y=9 rotation=0 packed=0x98c9
@@ -248,6 +309,9 @@ selected move block=m x=12 y=8 rotation=0 packed=0x60c8
 roundtrip move block=m x=12 y=8 rotation=0 packed=0x60c8
 score after P1=16 P2=15
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=130/85/10/16/15 bit(my/op/cant/able)=16/15/85/10 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=128/87/10/15/16 bit(my/op/cant/able)=15/16/87/10 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER2:
 # # # # # # # # # # # # # # # # 
 # . . . . . O . . . . . . . . # 
@@ -270,7 +334,12 @@ board view for PLAYER2:
 turn=PLAYER1 ai=RAND phase=OPENING
 score before P1=16 P2=15
 used blocks count=4
+board stats before PLAYER1 status(blank/cant/able/my/op)=130/85/10/16/15 bit(my/op/cant/able)=16/15/85/10 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=128/87/10/15/16 bit(my/op/cant/able)=15/16/87/10 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=808
+legal moves by block: a=80 c=44 d=66 e=36 f=49 g=52 h=48 j=36 k=41 n=36 o=44 p=44 q=36 r=54 s=46 t=48 u=48
+unused blocks legal counts: t=48 s=46 r=54 q=36 o=44 a=80 u=48 p=44 h=48 n=36 d=66 k=41 c=44 f=49 g=52 e=36 j=36
   candidate[0] move block=t x=9 y=5 rotation=0 packed=0x9895
   candidate[1] move block=t x=2 y=7 rotation=0 packed=0x9827
   candidate[2] move block=t x=4 y=8 rotation=0 packed=0x9848
@@ -281,6 +350,9 @@ selected move block=a x=6 y=9 rotation=5 packed=0x0569
 roundtrip move block=a x=6 y=9 rotation=5 packed=0x0569
 score after P1=17 P2=15
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=126/87/11/17/15 bit(my/op/cant/able)=17/15/87/11 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=127/87/10/15/17 bit(my/op/cant/able)=15/17/87/10 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # . . . . # M # * . . . . . . # 
@@ -303,7 +375,12 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=OPENING
 score before P1=17 P2=15
 used blocks count=4
+board stats before PLAYER1 status(blank/cant/able/my/op)=126/87/11/17/15 bit(my/op/cant/able)=17/15/87/11 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=127/87/10/15/17 bit(my/op/cant/able)=15/17/87/10 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=766
+legal moves by block: b=64 c=48 d=56 e=40 g=48 h=40 i=56 j=36 k=34 l=42 n=38 o=39 p=38 r=54 s=40 t=45 u=48
+unused blocks legal counts: t=45 s=40 r=54 o=39 b=64 u=48 p=38 h=40 n=38 d=56 k=34 c=48 i=56 g=48 e=40 j=36 l=42
   candidate[0] move block=t x=11 y=5 rotation=0 packed=0x98b5
   candidate[1] move block=t x=13 y=5 rotation=0 packed=0x98d5
   candidate[2] move block=t x=10 y=6 rotation=0 packed=0x98a6
@@ -314,6 +391,9 @@ selected move block=d x=13 y=5 rotation=5 packed=0x1dd5
 roundtrip move block=d x=13 y=5 rotation=5 packed=0x1dd5
 score after P1=17 P2=18
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=123/87/11/17/18 bit(my/op/cant/able)=17/18/87/11 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=119/91/11/18/17 bit(my/op/cant/able)=18/17/91/11 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER2:
 # # # # # # # # # # # # # # # # 
 # . . . . . O . . . . . . . . # 
@@ -336,7 +416,12 @@ board view for PLAYER2:
 turn=PLAYER1 ai=RAND phase=OPENING
 score before P1=17 P2=18
 used blocks count=5
+board stats before PLAYER1 status(blank/cant/able/my/op)=123/87/11/17/18 bit(my/op/cant/able)=17/18/87/11 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=119/91/11/18/17 bit(my/op/cant/able)=18/17/91/11 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=721
+legal moves by block: c=44 d=66 e=36 f=48 g=52 h=40 j=36 k=39 n=32 o=45 p=46 q=36 r=58 s=46 t=49 u=48
+unused blocks legal counts: t=49 s=46 r=58 q=36 o=45 u=48 p=46 h=40 n=32 d=66 k=39 c=44 f=48 g=52 e=36 j=36
   candidate[0] move block=t x=9 y=5 rotation=0 packed=0x9895
   candidate[1] move block=t x=2 y=7 rotation=0 packed=0x9827
   candidate[2] move block=t x=4 y=8 rotation=0 packed=0x9848
@@ -347,6 +432,9 @@ selected move block=t x=4 y=9 rotation=2 packed=0x9a49
 roundtrip move block=t x=4 y=9 rotation=2 packed=0x9a49
 score after P1=22 P2=18
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=111/92/13/22/18 bit(my/op/cant/able)=22/18/92/13 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=114/91/11/18/22 bit(my/op/cant/able)=18/22/91/11 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # . . . . # M # * . . . . . . # 
@@ -369,7 +457,12 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=MIDDLE
 score before P1=22 P2=18
 used blocks count=5
+board stats before PLAYER1 status(blank/cant/able/my/op)=111/92/13/22/18 bit(my/op/cant/able)=22/18/92/13 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=114/91/11/18/22 bit(my/op/cant/able)=18/22/91/11 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=724
+legal moves by block: b=68 c=56 e=40 g=48 h=40 i=56 j=28 k=32 l=42 n=40 o=37 p=42 r=56 s=44 t=47 u=48
+unused blocks legal counts: t=47 s=44 r=56 o=37 b=68 u=48 p=42 h=40 n=40 k=32 c=56 i=56 g=48 e=40 j=28 l=42
   candidate[0] move block=t x=12 y=3 rotation=0 packed=0x98c3
   candidate[1] move block=t x=11 y=4 rotation=0 packed=0x98b4
   candidate[2] move block=t x=10 y=6 rotation=0 packed=0x98a6
@@ -380,6 +473,9 @@ selected move block=i x=10 y=5 rotation=0 packed=0x40a5
 roundtrip move block=i x=10 y=5 rotation=0 packed=0x40a5
 score after P1=22 P2=22
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=107/92/13/22/22 bit(my/op/cant/able)=22/22/92/13 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=102/97/13/22/22 bit(my/op/cant/able)=22/22/97/13 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER2:
 # # # # # # # # # # # # # # # # 
 # . . . . . O . . . . . . . . # 
@@ -402,7 +498,12 @@ board view for PLAYER2:
 turn=PLAYER1 ai=RAND phase=MIDDLE
 score before P1=22 P2=22
 used blocks count=6
+board stats before PLAYER1 status(blank/cant/able/my/op)=107/92/13/22/22 bit(my/op/cant/able)=22/22/92/13 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=102/97/13/22/22 bit(my/op/cant/able)=22/22/97/13 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=600
+legal moves by block: c=48 d=74 e=28 f=48 g=50 h=48 j=16 k=34 n=36 o=34 p=34 q=34 r=48 s=36 u=32
+unused blocks legal counts: s=36 r=48 q=34 o=34 u=32 p=34 h=48 n=36 d=74 k=34 c=48 f=48 g=50 e=28 j=16
   candidate[0] move block=s x=2 y=11 rotation=0 packed=0x902b
   candidate[1] move block=s x=4 y=12 rotation=0 packed=0x904c
   candidate[2] move block=s x=6 y=12 rotation=0 packed=0x906c
@@ -413,6 +514,9 @@ selected move block=u x=5 y=12 rotation=7 packed=0xa75c
 roundtrip move block=u x=5 y=12 rotation=7 packed=0xa75c
 score after P1=27 P2=22
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=92/98/17/27/22 bit(my/op/cant/able)=27/22/98/17 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=97/97/13/22/27 bit(my/op/cant/able)=22/27/97/13 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # . . . . # M # * . . . . . . # 
@@ -435,7 +539,12 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=MIDDLE
 score before P1=27 P2=22
 used blocks count=6
+board stats before PLAYER1 status(blank/cant/able/my/op)=92/98/17/27/22 bit(my/op/cant/able)=27/22/98/17 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=97/97/13/22/27 bit(my/op/cant/able)=22/27/97/13 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=404
+legal moves by block: b=72 c=48 e=28 g=32 h=24 j=4 k=18 l=21 n=12 o=21 p=20 r=32 s=22 t=26 u=24
+unused blocks legal counts: t=26 s=22 r=32 o=21 b=72 u=24 p=20 h=24 n=12 k=18 c=48 g=32 e=28 j=4 l=21
   candidate[0] move block=t x=11 y=3 rotation=0 packed=0x98b3
   candidate[1] move block=t x=12 y=3 rotation=0 packed=0x98c3
   candidate[2] move block=t x=7 y=4 rotation=0 packed=0x9874
@@ -446,6 +555,9 @@ selected move block=g x=7 y=13 rotation=7 packed=0x377d
 roundtrip move block=g x=7 y=13 rotation=7 packed=0x377d
 score after P1=27 P2=26
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=91/96/16/27/26 bit(my/op/cant/able)=27/26/96/16 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=88/101/14/26/27 bit(my/op/cant/able)=26/27/101/14 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER2:
 # # # # # # # # # # # # # # # # 
 # . . . . . O . . . . . . . . # 
@@ -468,7 +580,12 @@ board view for PLAYER2:
 turn=PLAYER1 ai=RAND phase=MIDDLE
 score before P1=27 P2=26
 used blocks count=7
+board stats before PLAYER1 status(blank/cant/able/my/op)=91/96/16/27/26 bit(my/op/cant/able)=27/26/96/16 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=88/101/14/26/27 bit(my/op/cant/able)=26/27/101/14 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=419
+legal moves by block: c=44 d=68 e=24 f=35 g=42 h=40 j=16 k=23 n=22 o=21 p=18 q=18 r=30 s=18
+unused blocks legal counts: s=18 r=30 q=18 o=21 p=18 h=40 n=22 d=68 k=23 c=44 f=35 g=42 e=24 j=16
   candidate[0] move block=s x=2 y=13 rotation=0 packed=0x902d
   candidate[1] move block=s x=9 y=4 rotation=1 packed=0x9194
   candidate[2] move block=s x=9 y=9 rotation=1 packed=0x9199
@@ -479,6 +596,9 @@ selected move block=c x=2 y=7 rotation=0 packed=0x1027
 roundtrip move block=c x=2 y=7 rotation=0 packed=0x1027
 score after P1=30 P2=26
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=84/101/15/30/26 bit(my/op/cant/able)=30/26/101/15 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=85/101/14/26/30 bit(my/op/cant/able)=26/30/101/14 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # . . . . # M # * . . . . . . # 
@@ -501,7 +621,12 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=MIDDLE
 score before P1=30 P2=26
 used blocks count=7
+board stats before PLAYER1 status(blank/cant/able/my/op)=84/101/15/30/26 bit(my/op/cant/able)=30/26/101/15 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=85/101/14/26/30 bit(my/op/cant/able)=26/30/101/14 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=315
+legal moves by block: b=68 c=40 e=24 h=16 j=4 k=15 l=19 n=8 o=18 p=16 r=30 s=20 t=21 u=16
+unused blocks legal counts: t=21 s=20 r=30 o=18 b=68 u=16 p=16 h=16 n=8 k=15 c=40 e=24 j=4 l=19
   candidate[0] move block=t x=11 y=3 rotation=0 packed=0x98b3
   candidate[1] move block=t x=12 y=3 rotation=0 packed=0x98c3
   candidate[2] move block=t x=7 y=4 rotation=0 packed=0x9874
@@ -512,6 +637,9 @@ selected move block=c x=12 y=3 rotation=4 packed=0x14c3
 roundtrip move block=c x=12 y=3 rotation=4 packed=0x14c3
 score after P1=30 P2=29
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=81/101/15/30/29 bit(my/op/cant/able)=30/29/101/15 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=76/107/14/29/30 bit(my/op/cant/able)=29/30/107/14 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER2:
 # # # # # # # # # # # # # # # # 
 # . . . . . O . . . . * # * . # 
@@ -534,7 +662,12 @@ board view for PLAYER2:
 turn=PLAYER1 ai=RAND phase=MIDDLE
 score before P1=30 P2=29
 used blocks count=8
+board stats before PLAYER1 status(blank/cant/able/my/op)=81/101/15/30/29 bit(my/op/cant/able)=30/29/101/15 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=76/107/14/29/30 bit(my/op/cant/able)=29/30/107/14 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=285
+legal moves by block: d=48 e=28 f=24 g=28 h=24 j=20 k=17 n=12 o=14 p=14 q=14 r=26 s=16
+unused blocks legal counts: s=16 r=26 q=14 o=14 p=14 h=24 n=12 d=48 k=17 f=24 g=28 e=28 j=20
   candidate[0] move block=s x=2 y=13 rotation=0 packed=0x902d
   candidate[1] move block=s x=9 y=4 rotation=1 packed=0x9194
   candidate[2] move block=s x=9 y=9 rotation=1 packed=0x9199
@@ -545,6 +678,9 @@ selected move block=d x=2 y=11 rotation=1 packed=0x192b
 roundtrip move block=d x=2 y=11 rotation=1 packed=0x192b
 score after P1=33 P2=29
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=76/105/13/33/29 bit(my/op/cant/able)=33/29/105/13 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=73/107/14/29/33 bit(my/op/cant/able)=29/33/107/14 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # . . . . # M # * . . . . . . # 
@@ -567,7 +703,12 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=MIDDLE
 score before P1=33 P2=29
 used blocks count=8
+board stats before PLAYER1 status(blank/cant/able/my/op)=76/105/13/33/29 bit(my/op/cant/able)=33/29/105/13 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=73/107/14/29/33 bit(my/op/cant/able)=29/33/107/14 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=173
+legal moves by block: b=64 e=20 h=8 j=8 k=6 l=11 n=4 o=8 p=6 r=20 s=10 t=8
+unused blocks legal counts: t=8 s=10 r=20 o=8 b=64 u=0 p=6 h=8 n=4 k=6 e=20 j=8 l=11
   candidate[0] move block=t x=7 y=4 rotation=0 packed=0x9874
   candidate[1] move block=t x=6 y=10 rotation=0 packed=0x986a
   candidate[2] move block=t x=7 y=4 rotation=1 packed=0x9974
@@ -578,6 +719,9 @@ selected move block=n x=7 y=4 rotation=2 packed=0x6a74
 roundtrip move block=n x=7 y=4 rotation=2 packed=0x6a74
 score after P1=33 P2=34
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=76/101/12/33/34 bit(my/op/cant/able)=33/34/101/12 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=63/111/15/34/33 bit(my/op/cant/able)=34/33/111/15 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER2:
 # # # # # # # # # # # # # # # # 
 # . . . . . O . . . . * # * . # 
@@ -600,7 +744,12 @@ board view for PLAYER2:
 turn=PLAYER1 ai=RAND phase=MIDDLE
 score before P1=33 P2=34
 used blocks count=9
+board stats before PLAYER1 status(blank/cant/able/my/op)=76/101/12/33/34 bit(my/op/cant/able)=33/34/101/12 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=63/111/15/34/33 bit(my/op/cant/able)=34/33/111/15 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=113
+legal moves by block: e=16 f=12 g=12 h=16 j=12 k=7 n=6 o=6 p=4 q=4 r=12 s=6
+unused blocks legal counts: s=6 r=12 q=4 o=6 p=4 h=16 n=6 k=7 f=12 g=12 e=16 j=12
   candidate[0] move block=s x=9 y=9 rotation=1 packed=0x9199
   candidate[1] move block=s x=9 y=8 rotation=2 packed=0x9298
   candidate[2] move block=s x=9 y=2 rotation=3 packed=0x9392
@@ -611,6 +760,9 @@ selected move block=e x=7 y=14 rotation=6 packed=0x267e
 roundtrip move block=e x=7 y=14 rotation=6 packed=0x267e
 score after P1=37 P2=34
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=70/103/12/37/34 bit(my/op/cant/able)=37/34/103/12 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=63/108/14/34/37 bit(my/op/cant/able)=34/37/108/14 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # . . . . # M # * . . . . . . # 
@@ -633,7 +785,12 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=MIDDLE
 score before P1=37 P2=34
 used blocks count=9
+board stats before PLAYER1 status(blank/cant/able/my/op)=70/103/12/37/34 bit(my/op/cant/able)=37/34/103/12 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=63/108/14/34/37 bit(my/op/cant/able)=34/37/108/14 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=182
+legal moves by block: b=68 e=20 h=24 j=12 k=6 l=8 o=11 p=4 r=12 s=2 t=7 u=8
+unused blocks legal counts: t=7 s=2 r=12 o=11 b=68 u=8 p=4 h=24 k=6 e=20 j=12 l=8
   candidate[0] move block=t x=4 y=2 rotation=0 packed=0x9842
   candidate[1] move block=t x=6 y=10 rotation=0 packed=0x986a
   candidate[2] move block=t x=4 y=2 rotation=1 packed=0x9942
@@ -644,6 +801,9 @@ selected move block=b x=7 y=10 rotation=5 packed=0x0d7a
 roundtrip move block=b x=7 y=10 rotation=5 packed=0x0d7a
 score after P1=37 P2=36
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=70/102/11/37/36 bit(my/op/cant/able)=37/36/102/11 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=59/110/14/36/37 bit(my/op/cant/able)=36/37/110/14 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER2:
 # # # # # # # # # # # # # # # # 
 # . . . . . O . . . . * # * . # 
@@ -666,7 +826,12 @@ board view for PLAYER2:
 turn=PLAYER1 ai=RAND phase=MIDDLE
 score before P1=37 P2=36
 used blocks count=10
+board stats before PLAYER1 status(blank/cant/able/my/op)=70/102/11/37/36 bit(my/op/cant/able)=37/36/102/11 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=59/110/14/36/37 bit(my/op/cant/able)=36/37/110/14 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=88
+legal moves by block: f=12 g=12 h=16 j=8 k=6 n=6 o=6 p=4 q=4 r=8 s=6
+unused blocks legal counts: s=6 r=8 q=4 o=6 p=4 h=16 n=6 k=6 f=12 g=12 j=8
   candidate[0] move block=s x=9 y=9 rotation=1 packed=0x9199
   candidate[1] move block=s x=9 y=8 rotation=2 packed=0x9298
   candidate[2] move block=s x=9 y=2 rotation=3 packed=0x9392
@@ -677,6 +842,9 @@ selected move block=r x=9 y=9 rotation=1 packed=0x8999
 roundtrip move block=r x=9 y=9 rotation=1 packed=0x8999
 score after P1=42 P2=36
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=61/105/12/42/36 bit(my/op/cant/able)=42/36/105/12 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=58/106/14/36/42 bit(my/op/cant/able)=36/42/106/14 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # . . . . # M # * . . . . . . # 
@@ -699,7 +867,12 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=MIDDLE
 score before P1=42 P2=36
 used blocks count=10
+board stats before PLAYER1 status(blank/cant/able/my/op)=61/105/12/42/36 bit(my/op/cant/able)=42/36/105/12 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=58/106/14/36/42 bit(my/op/cant/able)=36/42/106/14 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=84
+legal moves by block: e=16 h=16 j=12 k=5 l=6 o=9 p=4 r=4 t=4 u=8
+unused blocks legal counts: t=4 s=0 r=4 o=9 u=8 p=4 h=16 k=5 e=16 j=12 l=6
   candidate[0] move block=t x=4 y=2 rotation=0 packed=0x9842
   candidate[1] move block=t x=4 y=2 rotation=1 packed=0x9942
   candidate[2] move block=t x=10 y=2 rotation=2 packed=0x9aa2
@@ -710,6 +883,9 @@ selected move block=h x=5 y=2 rotation=4 packed=0x3c52
 roundtrip move block=h x=5 y=2 rotation=4 packed=0x3c52
 score after P1=42 P2=40
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=60/103/11/42/40 bit(my/op/cant/able)=42/40/103/11 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=52/109/13/40/42 bit(my/op/cant/able)=40/42/109/13 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER2:
 # # # # # # # # # # # # # # # # 
 # . . # M M O . . . . * # * . # 
@@ -732,7 +908,12 @@ board view for PLAYER2:
 turn=PLAYER1 ai=RAND phase=MIDDLE
 score before P1=42 P2=40
 used blocks count=11
+board stats before PLAYER1 status(blank/cant/able/my/op)=60/103/11/42/40 bit(my/op/cant/able)=42/40/103/11 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=52/109/13/40/42 bit(my/op/cant/able)=40/42/109/13 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=60
+legal moves by block: f=7 g=10 h=16 j=8 k=4 n=4 o=5 p=2 q=2 s=2
+unused blocks legal counts: s=2 q=2 o=5 p=2 h=16 n=4 k=4 f=7 g=10 j=8
   candidate[0] move block=s x=9 y=2 rotation=3 packed=0x9392
   candidate[1] move block=s x=9 y=2 rotation=7 packed=0x9792
   candidate[2] move block=q x=10 y=1 rotation=3 packed=0x83a1
@@ -743,6 +924,9 @@ selected move block=o x=9 y=1 rotation=3 packed=0x7391
 roundtrip move block=o x=9 y=1 rotation=3 packed=0x7391
 score after P1=47 P2=40
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=51/107/11/47/40 bit(my/op/cant/able)=47/40/107/11 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=49/109/11/40/47 bit(my/op/cant/able)=40/47/109/11 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # . . . O O M # M M M M # . . # 
@@ -765,7 +949,12 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=MIDDLE
 score before P1=47 P2=40
 used blocks count=11
+board stats before PLAYER1 status(blank/cant/able/my/op)=51/107/11/47/40 bit(my/op/cant/able)=47/40/107/11 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=49/109/11/40/47 bit(my/op/cant/able)=40/47/109/11 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=19
+legal moves by block: e=8 j=4 k=1 l=2 o=2 r=2
+unused blocks legal counts: t=0 s=0 r=2 o=2 u=0 p=0 k=1 e=8 j=4 l=2
   candidate[0] move block=r x=4 y=13 rotation=3 packed=0x8b4d
   candidate[1] move block=r x=4 y=13 rotation=4 packed=0x8c4d
   candidate[2] move block=o x=3 y=14 rotation=6 packed=0x763e
@@ -776,6 +965,9 @@ selected move block=k x=3 y=14 rotation=2 packed=0x523e
 roundtrip move block=k x=3 y=14 rotation=2 packed=0x523e
 score after P1=47 P2=45
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=48/106/10/47/45 bit(my/op/cant/able)=47/45/106/10 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=38/114/12/45/47 bit(my/op/cant/able)=45/47/114/12 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER2:
 # # # # # # # # # # # # # # # # 
 # . . # M M O . O O O O # * . # 
@@ -798,7 +990,12 @@ board view for PLAYER2:
 turn=PLAYER1 ai=RAND phase=MIDDLE
 score before P1=47 P2=45
 used blocks count=12
+board stats before PLAYER1 status(blank/cant/able/my/op)=48/106/10/47/45 bit(my/op/cant/able)=47/45/106/10 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=38/114/12/45/47 bit(my/op/cant/able)=45/47/114/12 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=31
+legal moves by block: f=2 g=6 h=16 j=4 k=1 s=2
+unused blocks legal counts: s=2 q=0 p=0 h=16 n=0 k=1 f=2 g=6 j=4
   candidate[0] move block=s x=11 y=4 rotation=3 packed=0x93b4
   candidate[1] move block=s x=11 y=4 rotation=7 packed=0x97b4
   candidate[2] move block=h x=1 y=1 rotation=0 packed=0x3811
@@ -809,6 +1006,9 @@ selected move block=g x=1 y=2 rotation=0 packed=0x3012
 roundtrip move block=g x=1 y=2 rotation=0 packed=0x3012
 score after P1=51 P2=45
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=42/108/10/51/45 bit(my/op/cant/able)=51/45/108/10 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=34/114/12/45/51 bit(my/op/cant/able)=45/51/114/12 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # M # * O O M # M M M M # . . # 
@@ -831,7 +1031,12 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=MIDDLE
 score before P1=51 P2=45
 used blocks count=12
+board stats before PLAYER1 status(blank/cant/able/my/op)=42/108/10/51/45 bit(my/op/cant/able)=51/45/108/10 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=34/114/12/45/51 bit(my/op/cant/able)=45/51/114/12 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=4
+legal moves by block: e=4
+unused blocks legal counts: t=0 s=0 r=0 o=0 u=0 p=0 e=4 j=0 l=0
   candidate[0] move block=e x=14 y=8 rotation=0 packed=0x20e8
   candidate[1] move block=e x=14 y=8 rotation=1 packed=0x21e8
   candidate[2] move block=e x=14 y=9 rotation=4 packed=0x24e9
@@ -841,6 +1046,9 @@ selected move block=e x=14 y=9 rotation=5 packed=0x25e9
 roundtrip move block=e x=14 y=9 rotation=5 packed=0x25e9
 score after P1=51 P2=49
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=38/108/10/51/49 bit(my/op/cant/able)=51/49/108/10 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=32/114/10/49/51 bit(my/op/cant/able)=49/51/114/10 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER2:
 # # # # # # # # # # # # # # # # 
 # O . # M M O . O O O O # * . # 
@@ -863,7 +1071,12 @@ board view for PLAYER2:
 turn=PLAYER1 ai=RAND phase=ENDING
 score before P1=51 P2=49
 used blocks count=13
+board stats before PLAYER1 status(blank/cant/able/my/op)=38/108/10/51/49 bit(my/op/cant/able)=51/49/108/10 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=32/114/10/49/51 bit(my/op/cant/able)=49/51/114/10 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=11
+legal moves by block: f=1 h=8 s=2
+unused blocks legal counts: s=2 q=0 p=0 h=8 n=0 k=0 f=1 j=0
   candidate[0] move block=s x=11 y=4 rotation=3 packed=0x93b4
   candidate[1] move block=s x=11 y=4 rotation=7 packed=0x97b4
   candidate[2] move block=h x=10 y=3 rotation=0 packed=0x38a3
@@ -874,6 +1087,9 @@ selected move block=f x=11 y=4 rotation=5 packed=0x2db4
 roundtrip move block=f x=11 y=4 rotation=5 packed=0x2db4
 score after P1=55 P2=49
 bit_status consistency=OK
+board stats after PLAYER1 status(blank/cant/able/my/op)=31/110/11/55/49 bit(my/op/cant/able)=55/49/110/11 bit_able_and_cant=0
+board stats after PLAYER2 status(blank/cant/able/my/op)=31/111/10/49/55 bit(my/op/cant/able)=49/55/111/10 bit_able_and_cant=0
+bit_status exact mismatches after=0
 board view for PLAYER1:
 # # # # # # # # # # # # # # # # 
 # M # * O O M # M M M M # . . # 
@@ -896,14 +1112,24 @@ board view for PLAYER1:
 turn=PLAYER2 ai=RAND phase=ENDING
 score before P1=55 P2=49
 used blocks count=13
+board stats before PLAYER1 status(blank/cant/able/my/op)=31/110/11/55/49 bit(my/op/cant/able)=55/49/110/11 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=31/111/10/49/55 bit(my/op/cant/able)=49/55/111/10 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=0
+legal moves by block: none
+unused blocks legal counts: t=0 s=0 r=0 o=0 u=0 p=0 j=0 l=0
 result=PASS pass_count=1
 
 ----- Step 29 -----
 turn=PLAYER1 ai=RAND phase=ENDING
 score before P1=55 P2=49
 used blocks count=14
+board stats before PLAYER1 status(blank/cant/able/my/op)=31/110/11/55/49 bit(my/op/cant/able)=55/49/110/11 bit_able_and_cant=0
+board stats before PLAYER2 status(blank/cant/able/my/op)=31/111/10/49/55 bit(my/op/cant/able)=49/55/111/10 bit_able_and_cant=0
+bit_status exact mismatches before=0
 legal moves=0
+legal moves by block: none
+unused blocks legal counts: s=0 q=0 p=0 h=0 n=0 k=0 j=0
 result=PASS pass_count=2
 
 ===== Single Game Debug Result =====

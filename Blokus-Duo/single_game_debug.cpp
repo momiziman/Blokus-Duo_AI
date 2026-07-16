@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <iomanip>
+#include <map>
 
 namespace {
 
@@ -71,6 +72,146 @@ void print_board(std::ostream &os, const Board &board, Color color) {
     }
     os << '\n';
   }
+}
+
+struct BoardDebugStats {
+  int blank = 0;
+  int cant = 0;
+  int able = 0;
+  int my_block = 0;
+  int op_block = 0;
+  int bit_my_block = 0;
+  int bit_op_block = 0;
+  int bit_cant = 0;
+  int bit_able = 0;
+  int bit_able_and_cant = 0;
+};
+
+BoardDebugStats collect_board_debug_stats(const Board &board, Color color) {
+  BoardDebugStats stats;
+  int col = static_cast<int>(color);
+  uint8_t own_block_bit = (col == 0) ? Board::P1_BLOCK_BIT : Board::P2_BLOCK_BIT;
+  uint8_t opp_block_bit = (col == 0) ? Board::P2_BLOCK_BIT : Board::P1_BLOCK_BIT;
+  uint8_t cant_bit = (col == 0) ? Board::P1_CANT_BIT : Board::P2_CANT_BIT;
+  uint8_t able_bit = (col == 0) ? Board::P1_ABLE_BIT : Board::P2_ABLE_BIT;
+
+  for (int y = 0; y < BOARD_SIZE; ++y) {
+    for (int x = 0; x < BOARD_SIZE; ++x) {
+      switch (board.status[col][y][x]) {
+      case BLANK:
+        ++stats.blank;
+        break;
+      case CANTSET:
+        ++stats.cant;
+        break;
+      case ABLESET:
+        ++stats.able;
+        break;
+      case MYBLOCK:
+        ++stats.my_block;
+        break;
+      case OPBLOCK:
+        ++stats.op_block;
+        break;
+      }
+
+      uint8_t bits = board.cell_bits(x, y);
+      if (bits & own_block_bit)
+        ++stats.bit_my_block;
+      if (bits & opp_block_bit)
+        ++stats.bit_op_block;
+      if (bits & cant_bit)
+        ++stats.bit_cant;
+      if (bits & able_bit)
+        ++stats.bit_able;
+      if ((bits & cant_bit) && (bits & able_bit))
+        ++stats.bit_able_and_cant;
+    }
+  }
+
+  return stats;
+}
+
+int count_bit_status_exact_mismatches(const Board &board) {
+  int mismatches = 0;
+  for (int y = 0; y < BOARD_SIZE; ++y) {
+    for (int x = 0; x < BOARD_SIZE; ++x) {
+      uint8_t expected = 0;
+
+      for (int col = 0; col < COLOR_NUM; ++col) {
+        uint8_t block_bit =
+            (col == 0) ? Board::P1_BLOCK_BIT : Board::P2_BLOCK_BIT;
+        uint8_t opp_block_bit =
+            (col == 0) ? Board::P2_BLOCK_BIT : Board::P1_BLOCK_BIT;
+        uint8_t cant_bit =
+            (col == 0) ? Board::P1_CANT_BIT : Board::P2_CANT_BIT;
+        uint8_t able_bit =
+            (col == 0) ? Board::P1_ABLE_BIT : Board::P2_ABLE_BIT;
+
+        int cell = board.status[col][y][x];
+        if (cell == MYBLOCK)
+          expected |= block_bit;
+        else if (cell == OPBLOCK)
+          expected |= opp_block_bit;
+        else if (cell == CANTSET)
+          expected |= cant_bit;
+        else if (cell == ABLESET)
+          expected |= able_bit;
+      }
+
+      if (board.cell_bits(x, y) != expected)
+        ++mismatches;
+    }
+  }
+  return mismatches;
+}
+
+void log_board_debug_stats(std::ostream &os, const Board &board, Color color,
+                           const std::string &label) {
+  BoardDebugStats stats = collect_board_debug_stats(board, color);
+  os << label << " " << color_to_string_local(color)
+     << " status(blank/cant/able/my/op)=" << stats.blank << "/"
+     << stats.cant << "/" << stats.able << "/" << stats.my_block << "/"
+     << stats.op_block << " bit(my/op/cant/able)=" << stats.bit_my_block
+     << "/" << stats.bit_op_block << "/" << stats.bit_cant << "/"
+     << stats.bit_able
+     << " bit_able_and_cant=" << stats.bit_able_and_cant << '\n';
+}
+
+void log_legal_moves_by_block(std::ostream &os,
+                              const vector<Move> &legal_moves) {
+  std::map<std::string, int> counts;
+  for (const auto &move : legal_moves)
+    ++counts[move.block_id];
+
+  os << "legal moves by block:";
+  if (counts.empty()) {
+    os << " none\n";
+    return;
+  }
+
+  for (const auto &[block_id, count] : counts)
+    os << ' ' << block_id << '=' << count;
+  os << '\n';
+}
+
+void log_unused_blocks_with_legal_counts(std::ostream &os, const Player &player,
+                                         const vector<Move> &legal_moves) {
+  std::map<std::string, int> counts;
+  for (const auto &move : legal_moves)
+    ++counts[move.block_id];
+
+  os << "unused blocks legal counts:";
+  bool any = false;
+  for (const auto &[block_id, _] : block_table) {
+    if (is_block_used(player, block_id))
+      continue;
+    any = true;
+    os << ' ' << block_id << '=' << counts[block_id];
+  }
+  if (!any)
+    os << " none";
+  os << '\n';
 }
 
 bool check_bit_status_consistency(const Board &board) {
@@ -169,9 +310,15 @@ int main() {
         << " phase=" << phase_to_string(phase) << '\n';
     log << "score before P1=" << p1.score << " P2=" << p2.score << '\n';
     log << "used blocks count=" << current->used_blocks.size() - 1 << '\n';
+    log_board_debug_stats(log, board, Color::PLAYER1, "board stats before");
+    log_board_debug_stats(log, board, Color::PLAYER2, "board stats before");
+    log << "bit_status exact mismatches before="
+        << count_bit_status_exact_mismatches(board) << '\n';
 
     auto legal_moves = get_all_legal_moves(board, turn, *current);
     log << "legal moves=" << legal_moves.size() << '\n';
+    log_legal_moves_by_block(log, legal_moves);
+    log_unused_blocks_with_legal_counts(log, *current, legal_moves);
     for (int i = 0; i < std::min<int>(5, legal_moves.size()); ++i) {
       log << "  candidate[" << i << "] ";
       log_move(log, legal_moves[i]);
@@ -200,6 +347,10 @@ int main() {
     log << "score after P1=" << p1.score << " P2=" << p2.score << '\n';
     log << "bit_status consistency="
         << (check_bit_status_consistency(board) ? "OK" : "NG") << '\n';
+    log_board_debug_stats(log, board, Color::PLAYER1, "board stats after");
+    log_board_debug_stats(log, board, Color::PLAYER2, "board stats after");
+    log << "bit_status exact mismatches after="
+        << count_bit_status_exact_mismatches(board) << '\n';
     log << "board view for " << color_to_string_local(turn) << ":\n";
     print_board(log, board, turn);
     log << '\n';
