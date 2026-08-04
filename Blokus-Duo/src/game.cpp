@@ -3,6 +3,30 @@
 struct MCTSNode;
 void log_node_basic(const MCTSNode *node);
 
+static const vector<string> &ordered_block_ids() {
+  if (!BLOCK_IDS_BY_SIZE.empty())
+    return BLOCK_IDS_BY_SIZE;
+
+  static vector<string> fallback_ids = [] {
+    vector<string> ids;
+    ids.reserve(block_table.size());
+    for (const auto &[id, _] : block_table)
+      ids.push_back(id);
+    return ids;
+  }();
+  return fallback_ids;
+}
+
+static vector<string> collect_unused_blocks(const Player &player) {
+  vector<string> unused_blocks;
+  unused_blocks.reserve(block_table.size());
+  for (const auto &id : ordered_block_ids()) {
+    if (!is_block_used(player, id))
+      unused_blocks.push_back(id);
+  }
+  return unused_blocks;
+}
+
 int score_limitter(Player p) {
   int lim;
   if (p.turn_num <= 12) {
@@ -23,18 +47,14 @@ int score_limitter(Player p) {
 vector<Move> get_all_legal_moves(Board &board, Color player_color,
                                  Player &player) {
   vector<Move> legal_moves;
-
-  // 使用済みブロックを除いた未使用ブロックリストを作成
-  vector<string> unused_blocks;
-  for (auto &[id, _] : block_table) {
-    if (!is_block_used(player, id)) {
-      unused_blocks.push_back(id);
-    }
-  }
+  auto able_positions = board.collect_able_positions(player_color);
 
   // 未使用ブロックで合法手探索
-  for (auto &block_id : unused_blocks) {
-    BlockData data = getBlock(block_id);
+  for (const auto &block_id : ordered_block_ids()) {
+    if (is_block_used(player, block_id))
+      continue;
+
+    const BlockData &data = getBlock(block_id);
     Block block(data);
 
     for (int rot = 0; rot < 8; ++rot) {
@@ -42,7 +62,7 @@ vector<Move> get_all_legal_moves(Board &board, Color player_color,
       tmp_block.rotate_block(rot);
 
       auto positions = board.search_settable_position_near_ableset(
-          player_color, tmp_block);
+          player_color, tmp_block, able_positions);
       // board.search_settable_position_near_ableset(player_color,tmp_block.shape);
 
       for (auto &[x, y] : positions) {
@@ -60,12 +80,7 @@ vector<Move> get_fast_legal_moves(Board &board, Color color, Player &player,
   vector<Move> moves;
 
   // --- 未使用ブロック列挙 ---
-  vector<string> unused_blocks;
-  for (auto &[id, _] : block_table) {
-    if (!is_block_used(player, id)) {
-      unused_blocks.push_back(id);
-    }
-  }
+  vector<string> unused_blocks = collect_unused_blocks(player);
 
   if (unused_blocks.empty())
     return moves;
@@ -77,8 +92,9 @@ vector<Move> get_fast_legal_moves(Board &board, Color color, Player &player,
 
   string block_id = unused_blocks[0]; // 最初のブロックのみ使用
 
-  BlockData data = getBlock(block_id);
+  const BlockData &data = getBlock(block_id);
   Block base(data);
+  auto able_positions = board.collect_able_positions(color);
 
   // --- 回転・反転 ---
   for (int rot = 0; rot < 8; ++rot) {
@@ -86,7 +102,7 @@ vector<Move> get_fast_legal_moves(Board &board, Color color, Player &player,
     tmp.rotate_block(rot);
 
     auto positions =
-        board.search_settable_position_near_ableset(color, tmp);
+        board.search_settable_position_near_ableset(color, tmp, able_positions);
 
     for (auto &[x, y] : positions) {
       moves.emplace_back(block_id, x, y, rot);
@@ -110,12 +126,7 @@ vector<Move> get_one_legal_moves(Board &board, Color color, Player &player,
   vector<Move> moves;
 
   // --- 未使用ブロック列挙 ---
-  vector<string> unused_blocks;
-  for (auto &[id, _] : block_table) {
-    if (!is_block_used(player, id)) {
-      unused_blocks.push_back(id);
-    }
-  }
+  vector<string> unused_blocks = collect_unused_blocks(player);
 
   if (unused_blocks.empty())
     return moves;
@@ -124,10 +135,11 @@ vector<Move> get_one_legal_moves(Board &board, Color color, Player &player,
 
   // 未使用ブロックの探索順をランダム化
   shuffle(unused_blocks.begin(), unused_blocks.end(), gen);
+  auto able_positions = board.collect_able_positions(color);
   // --- 全未使用ブロックに対して探索 ---
   for (const auto &block_id : unused_blocks) {
 
-    BlockData data = getBlock(block_id);
+    const BlockData &data = getBlock(block_id);
     Block base(data);
 
     // --- 回転・反転 ---
@@ -136,7 +148,7 @@ vector<Move> get_one_legal_moves(Board &board, Color color, Player &player,
       tmp.rotate_block(rot);
 
       auto positions =
-          board.search_settable_position_near_ableset(color, tmp);
+          board.search_settable_position_near_ableset(color, tmp, able_positions);
 
       for (auto &[x, y] : positions) {
         moves.emplace_back(block_id, x, y, rot);
@@ -161,12 +173,7 @@ vector<Move> get_oneable_legal_moves(Board &board, Color color,
   vector<Move> moves;
 
   // --- 未使用ブロック列挙 ---
-  vector<string> unused_blocks;
-  for (auto &[id, _] : block_table) {
-    if (!is_block_used(player, id)) {
-      unused_blocks.push_back(id);
-    }
-  }
+  vector<string> unused_blocks = collect_unused_blocks(player);
 
   if (unused_blocks.empty())
     return moves;
@@ -177,7 +184,7 @@ vector<Move> get_oneable_legal_moves(Board &board, Color color,
   shuffle(unused_blocks.begin(), unused_blocks.end(), gen);
 
   string block_id = unused_blocks[0]; // 最初のブロックのみ使用
-  BlockData data = getBlock(block_id);
+  const BlockData &data = getBlock(block_id);
   Block base(data);
   int ax = -1;
   int ay = -1;
@@ -209,12 +216,12 @@ vector<pair<string, int>>
 get_legal_moves_no_pos(Board &board, Color player_color, Player &player) {
   vector<pair<string, int>> legal_moves;
 
-  for (auto &[id, _] : block_table) {
+  for (const auto &id : ordered_block_ids()) {
     // 使用済みブロックはスキップ
     if (is_block_used(player, id))
       continue;
 
-    BlockData data = getBlock(id);
+    const BlockData &data = getBlock(id);
     Block block(data);
 
     for (int rot = 0; rot < 8; ++rot) {
@@ -237,12 +244,12 @@ vector<string> get_legal_block_types(Board &board, Color player_color,
                                      Player &player) {
   vector<string> legal_blocks;
 
-  for (auto &[id, _] : block_table) {
+  for (const auto &id : ordered_block_ids()) {
     // 使用済みブロックはスキップ
     if (is_block_used(player, id))
       continue;
 
-    BlockData data = getBlock(id);
+    const BlockData &data = getBlock(id);
     Block block(data);
 
     bool can_place = false;
@@ -378,7 +385,7 @@ pair<int, int> random_playout(Board board, Player player1, Player player2,
           int idx = dis(gen);
 
           Move move = legal_moves[idx];
-          BlockData data = getBlock(move.block_id);
+          const BlockData &data = getBlock(move.block_id);
           Block block(data);
 
           board.change_status(current_color, block, move.block_id,
@@ -391,7 +398,7 @@ pair<int, int> random_playout(Board board, Player player1, Player player2,
       int idx = dis(gen);
 
       Move move = legal_moves[idx];
-      BlockData data = getBlock(move.block_id);
+      const BlockData &data = getBlock(move.block_id);
       Block block(data);
 
       /*cout << "Block id: " << block_id
@@ -446,7 +453,7 @@ double heuristic_playout(Board board, Player p1, Player p2, Color turn) {
           int idx = dis(gen);
 
           Move move = moves[idx];
-          BlockData data = getBlock(move.block_id);
+          const BlockData &data = getBlock(move.block_id);
           Block block(data);
           board.change_status(turn, block, move.block_id, move.rotation, move.x,
                               move.y, *cur);
@@ -466,7 +473,7 @@ double heuristic_playout(Board board, Player p1, Player p2, Color turn) {
       int idx = dis(gen);
 
       Move move = moves[idx];
-      BlockData data = getBlock(move.block_id);
+      const BlockData &data = getBlock(move.block_id);
       Block block(data);
       board.change_status(turn, block, move.block_id, move.rotation, move.x,
                           move.y, *cur);
@@ -572,7 +579,7 @@ struct MCTSNode {
     Player *cur = (current_player == Color::PLAYER1) ? &next_p1 : &next_p2;
 
     // 盤面更新（next_board に対して）
-    BlockData data = getBlock(move.block_id);
+    const BlockData &data = getBlock(move.block_id);
     Block blk(data);
     next_board.change_status(current_player, blk, move.block_id, move.rotation,
                              move.x, move.y, *cur);
@@ -997,14 +1004,14 @@ GameResult play_game(Board board, Player p1, Player p2, Color start_turn,
   }
 
   if (p1.score > p2.score) {
-    board.print_status(Color::PLAYER1);
+    // board.print_status(Color::PLAYER1);
     // cout << "Final Score - P1: " << p1.score << ", P2: " << p2.score << "\n";
     // cout << "P1 is WIN!"
     //      << "\n";
     return GameResult::P1_WIN;
   }
   if (p2.score > p1.score) {
-    board.print_status(Color::PLAYER2);
+    // board.print_status(Color::PLAYER2);
     // cout << "Final Score - P1: " << p1.score << ", P2: " << p2.score << "\n";
     // cout << "P2 is WIN!"
     //      << "\n";

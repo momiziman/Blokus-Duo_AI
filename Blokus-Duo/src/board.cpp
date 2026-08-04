@@ -109,6 +109,21 @@ bool Board::settable_check(Color color, const vector<vector<int>> &block_shape,
   return settable_check(color, block, x, y);
 }
 
+vector<pair<int, int>> Board::collect_able_positions(Color color) const {
+  vector<pair<int, int>> positions;
+  int col = static_cast<int>(color);
+  uint8_t able_bit = (col == 0) ? P1_ABLE_BIT : P2_ABLE_BIT;
+
+  for (int y = 1; y <= TILE_NUMBER; ++y) {
+    for (int x = 1; x <= TILE_NUMBER; ++x) {
+      if (bit_status[y][x] & able_bit)
+        positions.emplace_back(x, y);
+    }
+  }
+
+  return positions;
+}
+
 vector<pair<int, int>> Board::search_settable_position(Color color,
                                                        const Block &block) {
   vector<pair<int, int>> res;
@@ -134,25 +149,26 @@ Board::search_settable_position(Color color,
 
 vector<pair<int, int>>
 Board::search_settable_position_near_ableset(Color color, const Block &block) {
+  return search_settable_position_near_ableset(
+      color, block, collect_able_positions(color));
+}
+
+vector<pair<int, int>> Board::search_settable_position_near_ableset(
+    Color color, const Block &block,
+    const vector<pair<int, int>> &able_positions) {
   vector<pair<int, int>> res;
   int col = static_cast<int>(color);
-  uint8_t able_bit = (col == 0) ? P1_ABLE_BIT : P2_ABLE_BIT;
   uint8_t cant_bit = (col == 0) ? P1_CANT_BIT : P2_CANT_BIT;
 
   bool candidates[BOARD_SIZE][BOARD_SIZE] = {};
 
-  for (int y = 1; y <= TILE_NUMBER; ++y) {
-    for (int x = 1; x <= TILE_NUMBER; ++x) {
-      if (!(bit_status[y][x] & able_bit))
-        continue;
-
-      for (int dy = -2; dy <= 2; ++dy) {
-        for (int dx = -2; dx <= 2; ++dx) {
-          int ny = y + dy;
-          int nx = x + dx;
-          if (1 <= ny && ny <= TILE_NUMBER && 1 <= nx && nx <= TILE_NUMBER)
-            candidates[ny][nx] = true;
-        }
+  for (const auto &[x, y] : able_positions) {
+    for (int dy = -2; dy <= 2; ++dy) {
+      for (int dx = -2; dx <= 2; ++dx) {
+        int ny = y + dy;
+        int nx = x + dx;
+        if (1 <= ny && ny <= TILE_NUMBER && 1 <= nx && nx <= TILE_NUMBER)
+          candidates[ny][nx] = true;
       }
     }
   }
@@ -219,25 +235,30 @@ vector<pair<int, int>> Board::search_settable_position_one_ableset(
 
 std::optional<std::pair<int, int>>
 Board::select_random_settable_position(Color color) {
-  vector<pair<int, int>> candidates;
   int col = static_cast<int>(color);
   uint8_t able_bit = (col == 0) ? P1_ABLE_BIT : P2_ABLE_BIT;
+  std::optional<std::pair<int, int>> selected;
+  int count = 0;
+  static thread_local std::mt19937 gen(std::random_device{}());
 
   for (int y = 1; y <= TILE_NUMBER; ++y) {
     for (int x = 1; x <= TILE_NUMBER; ++x) {
-      if (bit_status[y][x] & able_bit)
-        candidates.emplace_back(x, y);
+      if (!(bit_status[y][x] & able_bit))
+        continue;
+
+      ++count;
+      std::uniform_int_distribution<> dist(1, count);
+      if (dist(gen) == 1)
+        selected = std::make_pair(x, y);
     }
   }
 
-  if (candidates.empty()) {
+  if (!selected) {
     // cout << "No one ABLESET." << endl;
     return std::nullopt;
   }
 
-  static thread_local std::mt19937 gen(std::random_device{}());
-  std::uniform_int_distribution<> dist(0, candidates.size() - 1);
-  return candidates[dist(gen)];
+  return selected;
 }
 
 void Board::change_status(Color color, Block &block, const std::string &block_id,

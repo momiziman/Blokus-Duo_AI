@@ -27,5 +27,5 @@ struct Block {
   void rotate_block(int dir);
 };
 
-BlockData getBlock(const std::string &id);
+const BlockData &getBlock(const std::string &id);
 void init_block_ids_by_size();

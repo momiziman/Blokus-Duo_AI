@@ -31,12 +31,16 @@ public:
   bool settable_check(Color color, const Block &block, int x, int y);
   bool settable_check(Color color, const vector<vector<int>> &block_shape,
                       int x, int y);
+  vector<pair<int, int>> collect_able_positions(Color color) const;
   vector<pair<int, int>> search_settable_position(Color color,
                                                   const Block &block);
   vector<pair<int, int>> search_settable_position(
       Color color, const vector<vector<int>> &block_shape);
   vector<pair<int, int>> search_settable_position_near_ableset(
       Color color, const Block &block);
+  vector<pair<int, int>> search_settable_position_near_ableset(
+      Color color, const Block &block,
+      const vector<pair<int, int>> &able_positions);
   vector<pair<int, int>> search_settable_position_near_ableset(
       Color color, const vector<vector<int>> &block_shape);
   vector<pair<int, int>> search_settable_position_one_ableset(

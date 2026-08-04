@@ -549,21 +549,16 @@ void init_block_ids_by_size() {
 }
 
 Block::Block(const BlockData &data) {
-    // std::array → vector に変換
+    rotations = data.rotations;
+    cells = rotations[0];
+    if (!cells.empty())
+      return;
+
     shape.resize(5, vector<int>(5));
     for (int i = 0; i < 5; ++i)
       for (int j = 0; j < 5; ++j)
         shape[i][j] = data.shape[i][j];
-
-    influence.resize(7, vector<int>(7));
-    for (int i = 0; i < 7; ++i)
-      for (int j = 0; j < 7; ++j)
-        influence[i][j] = data.influence[i][j];
-
-    rotations = data.rotations;
-    cells = rotations[0];
-    if (cells.empty())
-      rebuild_occupied_offsets();
+    rebuild_occupied_offsets();
   }
 
 vector<vector<int>> Block::transpose(const vector<vector<int>> &mat) {
@@ -614,14 +609,23 @@ void Block::rotate_block(int dir) {
       rebuild_occupied_offsets();
   }
 
-BlockData getBlock(const std::string &id) {
-  auto it = block_table.find(id);
-  if (it == block_table.end()) {
+const BlockData &getBlock(const std::string &id) {
+  static const std::unordered_map<std::string, BlockData> block_cache = [] {
+    std::unordered_map<std::string, BlockData> cache;
+    cache.reserve(block_table.size());
+    for (const auto &[block_id, data] : block_table) {
+      BlockData cached = data;
+      auto rot_it = block_rotation_table.find(block_id);
+      if (rot_it != block_rotation_table.end())
+        cached.rotations = rot_it->second;
+      cache.emplace(block_id, std::move(cached));
+    }
+    return cache;
+  }();
+
+  auto it = block_cache.find(id);
+  if (it == block_cache.end()) {
     throw std::runtime_error("Error: block id '" + id + "' not found!");
   }
-  BlockData data = it->second;
-  auto rot_it = block_rotation_table.find(id);
-  if (rot_it != block_rotation_table.end())
-    data.rotations = rot_it->second;
-  return data;
+  return it->second;
 }
