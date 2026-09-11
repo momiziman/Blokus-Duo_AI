@@ -8,7 +8,7 @@ namespace {
 
 constexpr int MAX_TREE_DEPTH = 10;
 constexpr int MCTS_ITERATIONS = 100;
-constexpr AIType P1_AI = AIType::RANDOM;
+constexpr AIType P1_AI = AIType::MCTS_STANDARD;
 constexpr AIType P2_AI = AIType::RANDOM;
 constexpr unsigned RANDOM_SEED = 20260627;
 
@@ -269,6 +269,9 @@ Move choose_move(Board &board, Player &p1, Player &p2, Color turn,
 
   log << "selection method=MCTS iterations=" << MCTS_ITERATIONS
       << " max_depth=" << MAX_TREE_DEPTH << '\n';
+  if (ai_type == AIType::MCTS_STANDARD)
+    return MCTSStandard(board, p1, p2, turn, MCTS_ITERATIONS,
+                        MAX_TREE_DEPTH);
   return MCTS(board, p1, p2, turn, MCTS_ITERATIONS, MAX_TREE_DEPTH, ai_type);
 }
 

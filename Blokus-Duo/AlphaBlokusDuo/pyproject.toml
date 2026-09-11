@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alpha-blokus-duo"
+version = "0.1.0"
+description = "Small AlphaZero MVP for the existing Blokus Duo engine"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy==2.5.3",
+  "pybind11==3.1.0",
+  "torch==2.14.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["alphablokus*"]

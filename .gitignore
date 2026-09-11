@@ -1,1 +1,11 @@
 Blokus-Duo/docs/
+Blokus-Duo/AlphaBlokusDuo/.venv/
+Blokus-Duo/AlphaBlokusDuo/build/
+Blokus-Duo/AlphaBlokusDuo/checkpoints/*
+!Blokus-Duo/AlphaBlokusDuo/checkpoints/.gitkeep
+Blokus-Duo/AlphaBlokusDuo/self_play_data/*
+!Blokus-Duo/AlphaBlokusDuo/self_play_data/.gitkeep
+Blokus-Duo/AlphaBlokusDuo/logs/*
+!Blokus-Duo/AlphaBlokusDuo/logs/.gitkeep
+Blokus-Duo/AlphaBlokusDuo/**/__pycache__/
+Blokus-Duo/AlphaBlokusDuo/alphablokus/_alpha_game*.pyd

@@ -15,7 +15,7 @@ constexpr int COLOR_NUM = 2;
 constexpr int BOARD_SIZE = TILE_NUMBER + 2;
 constexpr double MAX_SCORE = 89.0;
 
-enum class AIType { RANDOM, MCTS_WIN, MCTS_EVAL };
+enum class AIType { RANDOM, MCTS_STANDARD, MCTS_WIN, MCTS_EVAL };
 
 enum class GameResult { P1_WIN, P2_WIN, DRAW };
 

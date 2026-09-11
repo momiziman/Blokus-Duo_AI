@@ -7,7 +7,7 @@ struct Player {
   vector<string> used_blocks;
   uint32_t used_mask = 0;
   int score = 0;
-  int turn_num;
+  int turn_num = 0;
 };
 
 inline int block_index_from_id(const std::string &block_id) {

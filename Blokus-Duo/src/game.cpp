@@ -27,8 +27,8 @@ static vector<string> collect_unused_blocks(const Player &player) {
   return unused_blocks;
 }
 
-int score_limitter(Player p) {
-  int lim;
+int score_limitter(const Player &p) {
+  int lim = static_cast<int>(MAX_SCORE);
   if (p.turn_num <= 12) {
     lim = p.turn_num * 5;
   } else if (p.turn_num <= 17) {
@@ -37,10 +37,12 @@ int score_limitter(Player p) {
     lim = 80 + (p.turn_num - 17) * 3;
   } else if (p.turn_num == 20) {
     lim = 88;
-  } else if (p.turn_num == 21) {
+  } else if (p.turn_num >= 21) {
     lim = 89;
   }
-  return lim;
+  // turn_num == 0 is a valid initial state. Returning zero here made the
+  // evaluation produce NaN for 0 / 0.
+  return std::max(1, lim);
 }
 
 // Player クラスを引数に取って合法手リストを返す関数
@@ -328,8 +330,10 @@ double evaluate(Board &board, Player &p1, Player &p2, Color turn,
           cant++;
       }
     }
-    r = (w_score * p1.score / score_lim) - (w_cant * cant / 194) +
-        (w_mymob * mymob / 2000) - (w_opmob * opmob / 2000);
+    r = (w_score * static_cast<double>(p1.score) / score_lim) -
+        (w_cant * static_cast<double>(cant) / 194.0) +
+        (w_mymob * static_cast<double>(mymob) / 2000.0) -
+        (w_opmob * static_cast<double>(opmob) / 2000.0);
   } else {
     int score_lim = score_limitter(p2);
     int col = static_cast<int>(Color::PLAYER2);
@@ -346,8 +350,10 @@ double evaluate(Board &board, Player &p1, Player &p2, Color turn,
           cant++;
       }
     }
-    r = (w_score * p2.score / score_lim) - (w_cant * cant / 194) +
-        (w_mymob * mymob / 2000) - (w_opmob * opmob / 2000);
+    r = (w_score * static_cast<double>(p2.score) / score_lim) -
+        (w_cant * static_cast<double>(cant) / 194.0) +
+        (w_mymob * static_cast<double>(mymob) / 2000.0) -
+        (w_opmob * static_cast<double>(opmob) / 2000.0);
   }
   return r;
 }
@@ -416,8 +422,9 @@ pair<int, int> random_playout(Board board, Player player1, Player player2,
   return {player1.score, player2.score};
 }
 
-double heuristic_playout(Board board, Player p1, Player p2, Color turn) {
-  int PLAYOUT_DEPTH;
+double heuristic_playout(Board board, Player p1, Player p2, Color turn,
+                         Color perspective) {
+  int PLAYOUT_DEPTH = 5;
   auto phase = board.get_phase(p1, p2);
 
   switch (phase) {
@@ -486,7 +493,9 @@ double heuristic_playout(Board board, Player p1, Player p2, Color turn) {
     }
   }
 
-  return evaluate(board, p1, p2, turn, phase);
+  // Playout depths can be odd. Evaluating from `turn` would then reverse the
+  // player perspective depending on the phase and number of passes.
+  return evaluate(board, p1, p2, perspective, phase);
 }
 
 static vector<std::uint16_t> pack_moves(const vector<Move> &moves) {
@@ -513,6 +522,7 @@ struct MCTSNode {
   int depth;
 
   std::vector<std::uint16_t> untried_moves;
+  bool moves_initialized = false;
 
   // このノードへの着手
   std::uint16_t packed_move;
@@ -527,6 +537,16 @@ struct MCTSNode {
 
   Move move() const {
     return Move::from_packed(packed_move);
+  }
+
+  void initialize_moves() {
+    if (moves_initialized)
+      return;
+    Player *player =
+        (current_player == Color::PLAYER1) ? &player1 : &player2;
+    untried_moves =
+        pack_moves(get_all_legal_moves(board, current_player, *player));
+    moves_initialized = true;
   }
 
   // --- Selection: UCB1 で子ノード選択 ---
@@ -556,6 +576,7 @@ struct MCTSNode {
 
   // --- Expansion: 未展開手から子ノードを生成 ---
   MCTSNode *expand_node() {
+    initialize_moves();
     if (untried_moves.empty()) {
       return this;
     }
@@ -599,16 +620,11 @@ struct MCTSNode {
     children.push_back(child);
 
     // 子ノードの未展開手（合法手）を計算して設定する
-    Player *next_player =
-        (next_turn == Color::PLAYER1) ? &child->player1 : &child->player2;
-    child->untried_moves =
-        pack_moves(get_all_legal_moves(child->board, next_turn, *next_player));
-
     return child;
   }
 
   // --- Simulation: playout の呼び出し ---
-  double simulate(AIType ai_type) {
+  double simulate(AIType ai_type, Color root_player) {
     Board sim_board = board;
     Player sim_p1 = player1;
     Player sim_p2 = player2;
@@ -619,14 +635,15 @@ struct MCTSNode {
       auto [score1, score2] =
           random_playout(sim_board, sim_p1, sim_p2, sim_turn);
 
-      if (current_player == Color::PLAYER1) {
+      if (root_player == Color::PLAYER1) {
         result = (score1 > score2) ? 1.0 : (score1 == score2 ? 0.5 : 0.0);
       } else {
         result = (score2 > score1) ? 1.0 : (score1 == score2 ? 0.5 : 0.0);
       }
     }
     if (ai_type == AIType::MCTS_EVAL) {
-      result = heuristic_playout(sim_board, sim_p1, sim_p2, sim_turn);
+      result = heuristic_playout(sim_board, sim_p1, sim_p2, sim_turn,
+                                 root_player);
     }
     return result;
   }
@@ -655,7 +672,6 @@ struct MCTSNode {
         Move move = moves[dis(gen)];
 
         Block blk(getBlock(move.block_id));
-        blk.rotate_block(move.rotation);
 
         board.change_status(turn, blk, move.block_id, move.rotation, move.x,
                             move.y, *cur);
@@ -670,18 +686,20 @@ struct MCTSNode {
     }
 
     if (start_turn == Color::PLAYER1) {
-      if (p1.score > p2.score)
+      if (p1.score > p2.score) {
         // cout << "P1 wins\n";
-      return 1.0;
+        return 1.0;
+      }
       if (p1.score < p2.score) {
         // cout << "P2 wins\n";
         return 0.0;
       }
       return 0.5; // 引き分け
     } else {
-      if (p2.score > p1.score)
+      if (p2.score > p1.score) {
         // cout << "P2 wins\n";
-      return 1.0;
+        return 1.0;
+      }
       if (p2.score < p1.score) {
         // cout << "P1 wins\n";
         return 0.0;
@@ -716,6 +734,20 @@ struct MCTSNode {
       node->board.print_status(node->current_player);
     } /* デバッグ用 */
 
+      node = node->parent;
+    }
+  }
+
+  // Textbook MCTS stores the result for the player who made the move leading
+  // to each node. Values stay in [0, 1], which is the range expected by UCT.
+  void backpropagate_standard(double root_result, Color root_player) {
+    MCTSNode *node = this;
+    while (node != nullptr) {
+      node->visit_count++;
+      if (node->parent == nullptr || node->current_player != root_player)
+        node->win_score += root_result;
+      else
+        node->win_score += 1.0 - root_result;
       node = node->parent;
     }
   }
@@ -814,26 +846,83 @@ void delete_subtree(MCTSNode *node) {
   delete node;
 }
 
+Move MCTSStandard(Board root_board, Player root_p1, Player root_p2,
+                  Color root_turn, int iterations, int max_tree_depth) {
+  MCTSNode *root = new MCTSNode(root_board, root_p1, root_p2, root_turn);
+  root->initialize_moves();
+  if (root->untried_moves.empty()) {
+    delete_subtree(root);
+    return Move();
+  }
+
+  if (iterations <= 0) {
+    switch (root_board.get_phase(root_p1, root_p2)) {
+    case GamePhase::OPENING:
+      iterations = 1500;
+      break;
+    case GamePhase::MIDDLE:
+      iterations = 700;
+      break;
+    case GamePhase::ENDING:
+      iterations = 500;
+      break;
+    }
+  }
+  max_tree_depth = std::max(1, max_tree_depth);
+
+  for (int iter = 0; iter < iterations; ++iter) {
+    MCTSNode *node = root;
+
+    // Selection and expansion: descend through fully expanded nodes, then
+    // expand exactly one previously untried move.
+    while (node->depth < max_tree_depth) {
+      node->initialize_moves();
+      if (!node->untried_moves.empty()) {
+        node = node->expand_node();
+        break;
+      }
+      if (node->children.empty())
+        break;
+      node = node->select_child();
+    }
+
+    // Simulation runs to the end of the game without using board evaluation.
+    const double result = node->simulate(AIType::MCTS_WIN, root_turn);
+    node->eval_value = result;
+    node->backpropagate_standard(result, root_turn);
+  }
+
+  MCTSNode *best_child = nullptr;
+  for (MCTSNode *child : root->children) {
+    if (best_child == nullptr || child->visit_count > best_child->visit_count)
+      best_child = child;
+  }
+
+  Move best_move = best_child ? best_child->move() : Move();
+  delete_subtree(root);
+  return best_move;
+}
+
 // ============================
 // MCTS 本体
 // ============================
 Move MCTS(Board root_board, Player root_p1, Player root_p2, Color root_turn,
           int iterations, int MAX_TREE_DEPTH, AIType ai_type) {
+  if (ai_type == AIType::MCTS_STANDARD)
+    return MCTSStandard(root_board, root_p1, root_p2, root_turn, iterations,
+                        MAX_TREE_DEPTH);
+
   // --- ルートノード作成 ---
   MCTSNode *root = new MCTSNode(root_board, root_p1, root_p2, root_turn);
 
   auto phase = root_board.get_phase(root_p1, root_p2);
 
   // ルートの未展開手のセット
-  if (root_turn == Color::PLAYER1)
-    root->untried_moves =
-        pack_moves(get_all_legal_moves(root_board, Color::PLAYER1, root_p1));
-  else
-    root->untried_moves =
-        pack_moves(get_all_legal_moves(root_board, Color::PLAYER2, root_p2));
+  root->initialize_moves();
 
   if (root->untried_moves.empty()) {
     // std::cout << "[MCTS] No moves available.\n";
+    delete_subtree(root);
     return Move();
   }
 
@@ -841,23 +930,24 @@ Move MCTS(Board root_board, Player root_p1, Player root_p2, Color root_turn,
     root->expand_node();
   }
 
-  switch (phase) {
-  case GamePhase::OPENING:
-    iterations = 1500;
-    break;
-  case GamePhase::MIDDLE:
-    iterations = 700;
-    break;
-  case GamePhase::ENDING:
-    iterations = 500;
-    break;
+  // A positive caller-supplied budget is authoritative. Passing zero selects
+  // the phase-dependent defaults used by the graduation-research version.
+  if (iterations <= 0) {
+    switch (phase) {
+    case GamePhase::OPENING:
+      iterations = 1500;
+      break;
+    case GamePhase::MIDDLE:
+      iterations = 700;
+      break;
+    case GamePhase::ENDING:
+      iterations = 500;
+      break;
+    }
   }
 
   // std::cout << "[MCTS] Root legal moves = " << root->children.size()
   //           << std::endl;
-
-  std::random_device rd;
-  std::mt19937 gen(rd());
 
   // ============================
   // MCTSループ
@@ -867,8 +957,10 @@ Move MCTS(Board root_board, Player root_p1, Player root_p2, Color root_turn,
     MCTSNode *node = root;
     // 1. Selection
     // cout << "[MCTS] Iteration " << iter + 1 << "/" << iterations << "\n";
-    while (node->depth < MAX_TREE_DEPTH && node->untried_moves.empty() &&
-           !node->children.empty()) {
+    while (node->depth < MAX_TREE_DEPTH) {
+      node->initialize_moves();
+      if (!node->untried_moves.empty() || node->children.empty())
+        break;
       node = node->select_child();
     }
 
@@ -883,13 +975,7 @@ Move MCTS(Board root_board, Player root_p1, Player root_p2, Color root_turn,
 
     // cout << "[MCTS] Simulation phase.\n";
     // 3. Simulation
-    if (ai_type == AIType::MCTS_EVAL) {
-      result = node->simulate(ai_type);
-    }
-
-    if (ai_type == AIType::MCTS_WIN) {
-      result = node->simulate(ai_type);
-    }
+    result = node->simulate(ai_type, root_turn);
 
     node->eval_value = result;
 
@@ -920,6 +1006,7 @@ Move MCTS(Board root_board, Player root_p1, Player root_p2, Color root_turn,
 
   if (best_child == nullptr) {
     // std::cout << "[MCTS] ERROR: no best child.\n";
+    delete_subtree(root);
     return Move();
   }
 
@@ -937,7 +1024,7 @@ Move MCTS(Board root_board, Player root_p1, Player root_p2, Color root_turn,
 
 GameResult play_game(Board board, Player p1, Player p2, Color start_turn,
                      AIType p1_ai, AIType p2_ai, int mcts_iterations,
-                     int max_tree_depth, GameStats *stats) {
+                     int max_tree_depth, GameStats *stats, Board *final_board) {
 
   Color turn = start_turn;
   int pass_count = 0;
@@ -960,7 +1047,12 @@ GameResult play_game(Board board, Player p1, Player p2, Color start_turn,
 
       Move move;
 
-      if (ai_type == AIType::MCTS_EVAL) {
+      if (ai_type == AIType::MCTS_STANDARD) {
+
+        move = MCTSStandard(board, p1, p2, turn, mcts_iterations,
+                            max_tree_depth);
+
+      } else if (ai_type == AIType::MCTS_EVAL) {
 
         move =
             MCTS(board, p1, p2, turn, mcts_iterations, max_tree_depth, ai_type);
@@ -1003,6 +1095,9 @@ GameResult play_game(Board board, Player p1, Player p2, Color start_turn,
     stats->p2_turns = p2.turn_num;
   }
 
+  if (final_board)
+    *final_board = board;
+
   if (p1.score > p2.score) {
     // board.print_status(Color::PLAYER1);
     // cout << "Final Score - P1: " << p1.score << ", P2: " << p2.score << "\n";
@@ -1021,7 +1116,8 @@ GameResult play_game(Board board, Player p1, Player p2, Color start_turn,
 }
 
 std::string Aitype_to_string(AIType c) {
-  return (c == AIType::MCTS_EVAL)  ? "EVAL"
-         : (c == AIType::MCTS_WIN) ? "WIN"
-                                   : "RAND";
+  return (c == AIType::MCTS_STANDARD) ? "STANDARD"
+         : (c == AIType::MCTS_EVAL)   ? "EVAL"
+         : (c == AIType::MCTS_WIN)    ? "WIN"
+                                      : "RAND";
 }
